@@ -3,6 +3,8 @@ package uz.kmax.tarixtest.fragment
 import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.LinearLayoutCompat
@@ -17,13 +19,13 @@ import uz.kmax.base.basefragment.BaseFragmentWC
 import uz.kmax.tarixtest.R
 import uz.kmax.tarixtest.ads.GoogleAds
 import uz.kmax.tarixtest.data.BaseTestData
-import uz.kmax.tarixtest.databinding.BaseTestFragmentBinding
+import uz.kmax.tarixtest.databinding.FragmentTestBinding
 import uz.kmax.tarixtest.dialog.DialogBack
 import uz.kmax.tarixtest.dialog.DialogEndTest
 import uz.kmax.tarixtest.tools.TestManager
 import kotlin.random.Random
 
-class TestFragment(testLocation: String, testCount : Int) : BaseFragmentWC<BaseTestFragmentBinding>(BaseTestFragmentBinding::inflate) {
+class TestFragment(testLocation: String, testCount : Int) : BaseFragmentWC<FragmentTestBinding>(FragmentTestBinding::inflate) {
     private var testLocationFragment: String = testLocation
     private var testCountFragment: Int = testCount
     private var testManager: TestManager = TestManager()
@@ -39,6 +41,7 @@ class TestFragment(testLocation: String, testCount : Int) : BaseFragmentWC<BaseT
     override fun onViewCreated() {
         googleAds.initialize(requireContext())
         googleAds.initializeBanner(binding.bannerAds)
+        googleAds.initializeInterstitialAds(requireContext(),getString(R.string.interstitialAdsUnitId))
         startTest(testLocationFragment,testCountFragment)
     }
 
@@ -63,6 +66,7 @@ class TestFragment(testLocation: String, testCount : Int) : BaseFragmentWC<BaseT
                             )
                         }
                     }
+                    listTest.shuffle()
                     testManager.setTestList(listTest)
                     loadView()
                     loadDataToView()
@@ -85,7 +89,7 @@ class TestFragment(testLocation: String, testCount : Int) : BaseFragmentWC<BaseT
         binding.back.setOnClickListener {
             dialogBack.show(requireContext())
             dialogBack.setOnBackYesListener {
-                startMainFragment(MenuFragment())
+                ads()
             }
         }
         binding.nextBtn.setOnClickListener {
@@ -94,7 +98,7 @@ class TestFragment(testLocation: String, testCount : Int) : BaseFragmentWC<BaseT
         binding.stopTest.setOnClickListener {
             dialogBack.show(requireContext())
             dialogBack.setOnBackYesListener {
-                startMainFragment(MenuFragment())
+                ads()
             }
         }
     }
@@ -125,7 +129,7 @@ class TestFragment(testLocation: String, testCount : Int) : BaseFragmentWC<BaseT
                     testManager.wrongAnswerCount
                 )
                 dialogEnd.setOnOkBtnListener {
-                    startMainFragment(MenuFragment())
+                    ads()
                 }
                 dialogEnd.setOnReStartListener {
                     testManager.currentQuestionPosition = 0
@@ -200,5 +204,19 @@ class TestFragment(testLocation: String, testCount : Int) : BaseFragmentWC<BaseT
             return random - 1
         }
         return random
+    }
+
+    private fun ads(){
+        googleAds.showInterstitialAds(requireActivity())
+        googleAds.setOnAdsNotReadyListener {
+            startMainFragment(MenuFragment())
+        }
+
+        googleAds.setOnAdDismissClickListener {
+            startMainFragment(MenuFragment())
+        }
+        googleAds.setOnAdsClickListener {
+            Toast.makeText(requireContext(), "Thanks ! for clicking ads :D", Toast.LENGTH_SHORT).show()
+        }
     }
 }

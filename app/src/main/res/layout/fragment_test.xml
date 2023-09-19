@@ -1,35 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
-        app:cardElevation="16dp"
-        app:cardCornerRadius="16dp"
+        android:id="@+id/questionList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp">
+        android:layout_margin="8dp"
+        app:cardBackgroundColor="@color/blue"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="16dp">
 
-        <TextView
-            android:layout_width="match_parent"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="Savol"
-            android:id="@+id/question"
-            android:textSize="16sp" />
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/question_32px"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="center_vertical"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="Savol"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.cardview.widget.CardView>
 
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/testCountLayout"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
     <androidx.cardview.widget.CardView
+        android:id="@+id/answerLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_margin="8dp">
+        android:layout_margin="8dp"
+        android:layout_weight="4"
+        app:cardBackgroundColor="@color/blue"
+        app:cardCornerRadius="16dp"
+        android:layout_marginBottom="10dp">
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,108 +129,157 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
 
-            <LinearLayout style="@style/VariantStyle">
+            <androidx.appcompat.widget.LinearLayoutCompat style="@style/VariantStyle">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:src="@drawable/ic_radio_button_unchecked_black_24dp" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:text="variant A"
+                    android:textColor="@color/white"
                     android:textSize="16sp" />
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
 
-            <LinearLayout style="@style/VariantStyle">
+            <androidx.appcompat.widget.LinearLayoutCompat style="@style/VariantStyle">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:src="@drawable/ic_radio_button_unchecked_black_24dp" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:text="variant A"
+                    android:textColor="@color/white"
                     android:textSize="16sp" />
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
 
-            <LinearLayout style="@style/VariantStyle">
+            <androidx.appcompat.widget.LinearLayoutCompat style="@style/VariantStyle">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:src="@drawable/ic_radio_button_unchecked_black_24dp" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:text="variant A"
+                    android:textColor="@color/white"
                     android:textSize="16sp" />
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
 
-            <LinearLayout style="@style/VariantStyle">
+            <androidx.appcompat.widget.LinearLayoutCompat style="@style/VariantStyle">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:src="@drawable/ic_radio_button_unchecked_black_24dp" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:text="variant D"
+                    android:textColor="@color/white"
                     android:textSize="16sp" />
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.cardview.widget.CardView>
 
-    <LinearLayout
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/bannerAds"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        ads:adUnitId="@string/bannerAdsUnitId">
+    </com.google.android.gms.ads.AdView>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginBottom="5dp">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/back"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_weight="1"
-            android:text="Finish" />
+            android:padding="10dp"
+            android:drawableStart="@drawable/back_32px"
+            android:background="@drawable/style_btn"
+            android:text="Back"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/stopTest"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:padding="8dp"
+            android:drawableEnd="@drawable/finish_32px"
+            android:background="@drawable/style_btn"
+            android:text="Finish"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/nextBtn"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_weight="1"
-            android:text="Next" />
-    </LinearLayout>
+            android:background="@drawable/style_btn"
+            android:text="Next"
+            android:drawableEnd="@drawable/next_32px"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

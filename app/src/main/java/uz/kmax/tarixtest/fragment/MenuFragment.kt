@@ -1,5 +1,6 @@
 package uz.kmax.tarixtest.fragment
 
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
@@ -23,6 +24,11 @@ class MenuFragment : BaseFragmentWC<FragmentMenuBinding>(FragmentMenuBinding::in
     private var googleAds = GoogleAds()
 
     override fun onViewCreated() {
+        val window = requireActivity().window
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.statusBarColor = this.resources.getColor(R.color.blue)
+
         googleAds.initialize(requireContext())
         googleAds.initializeInterstitialAds(requireContext(),getString(R.string.interstitialAdsUnitId))
         addTestData()
@@ -74,11 +80,11 @@ class MenuFragment : BaseFragmentWC<FragmentMenuBinding>(FragmentMenuBinding::in
     private fun ads(testLocation : String,testCount : Int){
         googleAds.showInterstitialAds(requireActivity())
         googleAds.setOnAdsNotReadyListener {
-            startMainFragment(TestFragment(testLocation,testCount))
+            replaceFragment(TestFragment(testLocation,testCount))
         }
 
         googleAds.setOnAdDismissClickListener {
-            startMainFragment(TestFragment(testLocation,testCount))
+            replaceFragment(TestFragment(testLocation,testCount))
         }
         googleAds.setOnAdsClickListener {
             Toast.makeText(requireContext(), "Thanks ! for clicking ads :D", Toast.LENGTH_SHORT).show()
