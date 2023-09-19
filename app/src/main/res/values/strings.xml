@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Tarix Test</string>
+    <string name="interstitialAdsUnitId">ca-app-pub-4664801446868642/7837932967</string>
+    <string name="bannerAdsUnitId">ca-app-pub-4664801446868642/2560010967</string>
+</resources>

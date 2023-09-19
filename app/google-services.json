@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "834644696983",
+    "firebase_url": "https://test-baza-51080-default-rtdb.firebaseio.com",
+    "project_id": "test-baza-51080",
+    "storage_bucket": "test-baza-51080.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:834644696983:android:9844698b2dcd822cadeed2",
+        "android_client_info": {
+          "package_name": "uz.kmax.tarixtest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "834644696983-v6p4hu2jeae0as9orvisdk9m3jvkb536.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbFwjDKUvCBn5XPhb_NcsBc8e4wnOWYP4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "834644696983-v6p4hu2jeae0as9orvisdk9m3jvkb536.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
