@@ -24,6 +24,11 @@ class GoogleAds() {
     private var onAdsNotReadyListener : (()-> Unit)? = null
     fun setOnAdsNotReadyListener(f: ()-> Unit){ onAdsNotReadyListener = f }
 
+    private var onAdsNullOrNonNullListener : ((status : Boolean)-> Unit)? = null
+    fun setOnAdsNullListener(f : (status : Boolean)-> Unit){
+        onAdsNullOrNonNullListener = f
+    }
+
     private var mInterstitialAd: InterstitialAd? = null
 
     fun initialize(context: Context){
@@ -35,10 +40,12 @@ class GoogleAds() {
         InterstitialAd.load(context,adUnit, adRequest, object : InterstitialAdLoadCallback() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
                 mInterstitialAd = null
+                onAdsNullOrNonNullListener?.invoke(false)
             }
 
             override fun onAdLoaded(interstitialAd: InterstitialAd) {
                 mInterstitialAd = interstitialAd
+                onAdsNullOrNonNullListener?.invoke(true)
                 callbackInterstitialAds()
             }
         })

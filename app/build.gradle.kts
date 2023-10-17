@@ -12,8 +12,8 @@ android {
         applicationId = "uz.kmax.tarixtest"
         minSdk = 24
         targetSdk = 33
-        versionCode = 3
-        versionName = "1.0.3"
+        versionCode = 5
+        versionName = "1.1.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -51,6 +51,9 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    implementation ("com.github.kmaxdeveloper:BaseLibrary:1.1.2")
-    implementation ("com.google.android.gms:play-services-ads:22.3.0")
+    implementation("com.github.kmaxdeveloper:BaseLibrary:1.1.2")
+    implementation("com.google.android.gms:play-services-ads:22.3.0")
+    implementation("com.google.android.play:review-ktx:2.0.1")
+    implementation("nl.dionsegijn:konfetti-xml:2.0.3")
+    implementation("nl.dionsegijn:konfetti:1.3.2")
 }

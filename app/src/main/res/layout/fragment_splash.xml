@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="Kmax Programmers 2023"
+        android:text="@string/company_name_with_symbol"
         android:textStyle="bold"
         android:textSize="20sp"
         android:textColor="@color/white"

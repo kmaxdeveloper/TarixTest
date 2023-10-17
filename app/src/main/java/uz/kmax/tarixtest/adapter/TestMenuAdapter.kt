@@ -14,9 +14,7 @@ import uz.kmax.tarixtest.databinding.ItemTestMenuBinding
 class TestMenuAdapter : RecyclerView.Adapter<TestMenuAdapter.HistoryViewHolder>() {
 
     private var testData = ArrayList<MenuTestData>()
-
     private var onTestItemClickListener: ((testLocation: String, testCount: Int) -> Unit)? = null
-
     fun setOnTestItemClickListener(listener: (testLocation: String, testCount: Int) -> Unit) {
         onTestItemClickListener = listener
     }
@@ -29,13 +27,12 @@ class TestMenuAdapter : RecyclerView.Adapter<TestMenuAdapter.HistoryViewHolder>(
 
     inner class HistoryViewHolder(var binding: ItemTestMenuBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
         fun bindData(data: MenuTestData) {
             binding.testType.text = data.testType
-            binding.testCount.text = "${data.testCount} ta test mavjud"
+            binding.testCount.text = "${data.testCount} ta variant mavjud"
             val storage = Firebase.storage.getReference("TarixTest")
             val imageRef: StorageReference =
-                storage.child("Test").child("${data.testLocation}")
+                storage.child("Test").child(data.testLocation)
                     .child("image.png")
 
             imageRef.getBytes(1024 * 1024)
@@ -68,5 +65,4 @@ class TestMenuAdapter : RecyclerView.Adapter<TestMenuAdapter.HistoryViewHolder>(
         holder.bindData(testData[position])
 
     override fun getItemCount() = testData.size
-
 }

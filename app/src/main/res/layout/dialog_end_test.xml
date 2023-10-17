@@ -29,7 +29,7 @@
             app:layout_constraintTop_toBottomOf="@id/congrats"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="Test Completed !"
+            android:text="@string/TestCompleted"
             android:textSize="35sp"
             android:textColor="@color/black"
             app:fontFamily="@font/pre_hear_regular"/>
@@ -45,7 +45,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Correct answer : "
+                android:text="@string/CorrectAnswer"
                 app:layout_constraintTop_toBottomOf="@id/completed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -58,7 +58,8 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 app:fontFamily="@font/pre_hear_regular"
-                android:text="15"
+                android:text="5"
+                android:layout_marginStart="10dp"
                 android:textSize="25sp"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -73,7 +74,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Wrong Answer : "
+                android:text="@string/WrongAnswer"
                 app:layout_constraintTop_toBottomOf="@id/completed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -86,7 +87,8 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 app:fontFamily="@font/pre_hear_regular"
-                android:text="16"
+                android:layout_marginStart="10dp"
+                android:text="6"
                 android:textSize="25sp"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -120,4 +122,9 @@
                 android:text="OK"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <nl.dionsegijn.konfetti.xml.KonfettiView
+        android:id="@+id/viewKonfetti"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

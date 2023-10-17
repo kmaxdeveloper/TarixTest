@@ -3,7 +3,6 @@ package uz.kmax.tarixtest.fragment
 import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -40,9 +39,13 @@ class TestFragment(testLocation: String, testCount : Int) : BaseFragmentWC<Fragm
 
     override fun onViewCreated() {
         googleAds.initialize(requireContext())
-        googleAds.initializeBanner(binding.bannerAds)
-        googleAds.initializeInterstitialAds(requireContext(),getString(R.string.interstitialAdsUnitId))
         startTest(testLocationFragment,testCountFragment)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        googleAds.initializeInterstitialAds(requireContext(),getString(R.string.interstitialAdsUnitId))
+        googleAds.initializeBanner(binding.bannerAds)
     }
 
     private fun startTest(testLocation: String,testCount: Int) {
@@ -139,6 +142,8 @@ class TestFragment(testLocation: String, testCount : Int) : BaseFragmentWC<Fragm
                             .setBackgroundResource(R.drawable.style_test_count)
                     }
                     testStatusCount = 0
+                    testManager.correctAnswerCount = 0
+                    testManager.wrongAnswerCount = 0
                 }
             }
         } else {

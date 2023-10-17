@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="none">
+        <item android:id="@+id/homePage"
+            android:title="Bosh Sahifa"
+            android:icon="@drawable/home"/>
+        <item android:id="@+id/ratingApp"
+            android:title="Dasturni baholash"
+            android:icon="@drawable/rating_128px"/>
+        <item android:id="@+id/devConnection"
+            android:title="Dasturchi bilan aloqa"
+            android:icon="@drawable/dev_128px" />
+        <item android:id="@+id/privacyPolicy"
+            android:title="Privacy Policy"
+            android:icon="@drawable/privacy_policy_128px"/>
+    </group>
+</menu>

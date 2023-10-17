@@ -7,6 +7,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat.Type.statusBars
+import nl.dionsegijn.konfetti.xml.KonfettiView
 import uz.kmax.base.fragmentcontroller.FragmentController
 import uz.kmax.tarixtest.databinding.ActivityMainBinding
 import uz.kmax.tarixtest.fragment.SplashFragment

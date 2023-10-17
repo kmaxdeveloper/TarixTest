@@ -1,5 +1,16 @@
 <resources>
     <string name="app_name">Tarix Test</string>
+    <string name="company_name">Kmax Programmers</string>
+    <string name="company_name_with_symbol">Kmax Programmers ®</string>
     <string name="interstitialAdsUnitId">ca-app-pub-4664801446868642/7837932967</string>
     <string name="bannerAdsUnitId">ca-app-pub-4664801446868642/2560010967</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="PrivacyPolicy">Privacy Policy</string>
+    <string name="AdminConnect">Admin bilan aloqa</string>
+    <string name="AdminGmail">komilcoder7@gmail.com</string>
+    <string name="AdminTelegram">\@komildeveloper</string>
+    <string name="TestCompleted">Test Yakunlandi !</string>
+    <string name="CorrectAnswer">To\'g\'ri javob : </string>
+    <string name="WrongAnswer">Noto\'g\'ri javob : </string>
 </resources>

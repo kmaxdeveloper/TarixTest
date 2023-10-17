@@ -6,7 +6,13 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
+import nl.dionsegijn.konfetti.core.Party
+import nl.dionsegijn.konfetti.core.Position
+import nl.dionsegijn.konfetti.core.emitter.Emitter
+import nl.dionsegijn.konfetti.core.models.Shape
+import nl.dionsegijn.konfetti.core.models.Size
 import uz.kmax.tarixtest.databinding.DialogEndTestBinding
+import java.util.concurrent.TimeUnit
 
 class DialogEndTest {
 
@@ -26,6 +32,21 @@ class DialogEndTest {
         dialog.setContentView(binding.root)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCancelable(false)
+
+        val party = Party(
+            colors = listOf(Color.YELLOW, Color.GREEN, Color.BLUE),
+            angle = 0,
+            spread = 360,
+            speed = 1f,
+            maxSpeed = 10f,
+            fadeOutEnabled = true,
+            timeToLive = 5000L,
+            shapes = listOf(Shape.Square, Shape.Circle),
+            size = listOf(Size(12)),
+            position = Position.Relative(0.0, 0.0).between(Position.Relative(1.0, 0.0)),
+            emitter = Emitter(duration = 5, TimeUnit.SECONDS).perSecond(300)
+        )
+        binding.viewKonfetti.start(party)
 
         binding.correctAnswerCount.text = correctAnswerCount.toString()
         binding.wrongAnswerCount.text = wrongAnswerCount.toString()
