@@ -12,8 +12,8 @@ android {
         applicationId = "uz.kmax.tarixtest"
         minSdk = 24
         targetSdk = 33
-        versionCode = 5
-        versionName = "1.1.5"
+        versionCode = 6
+        versionName = "1.2.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -56,4 +56,5 @@ dependencies {
     implementation("com.google.android.play:review-ktx:2.0.1")
     implementation("nl.dionsegijn:konfetti-xml:2.0.3")
     implementation("nl.dionsegijn:konfetti:1.3.2")
+    implementation ("com.airbnb.android:lottie:3.4.0")
 }

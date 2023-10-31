@@ -66,6 +66,23 @@ class MenuFragment : BaseFragmentWC<FragmentMenuBinding>(FragmentMenuBinding::in
                 }
             }
         }
+        adapter.setOnDayHistoryClickListener {
+            if (Connection().check(requireContext())) {
+                ads()
+            } else {
+                connectionDialog.show(requireContext())
+                connectionDialog.setOnCloseListener {
+                    activity?.finish()
+                }
+                connectionDialog.setOnTryAgainListener {
+                    if (Connection().check(requireContext())) {
+                        ads()
+                    } else {
+                        connectionDialog.show(requireContext())
+                    }
+                }
+            }
+        }
 
         // Navigation View Code --
         binding.navigationMenu.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
@@ -127,6 +144,7 @@ class MenuFragment : BaseFragmentWC<FragmentMenuBinding>(FragmentMenuBinding::in
 
     private fun addTestData() {
         val menuTestDataArray = ArrayList<MenuTestData>()
+        menuTestDataArray.add(MenuTestData(0, "", 1, "Kun Tarixi",1))
         db.getReference("TarixTest").child("AllTest")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -171,6 +189,23 @@ class MenuFragment : BaseFragmentWC<FragmentMenuBinding>(FragmentMenuBinding::in
             }
         }else{
             replaceFragment(TestFragment(testLocation,testCount))
+        }
+    }
+
+    private fun ads(){
+        if (adsStatus){
+            googleAds.showInterstitialAds(requireActivity())
+            googleAds.setOnAdsNotReadyListener {
+                replaceFragment(HistoryOfDayFragment())
+            }
+            googleAds.setOnAdDismissClickListener {
+                replaceFragment(HistoryOfDayFragment())
+            }
+            googleAds.setOnAdsClickListener {
+                Toast.makeText(requireContext(), "Thanks ! for clicking ads :D", Toast.LENGTH_SHORT).show()
+            }
+        }else{
+            replaceFragment(HistoryOfDayFragment())
         }
     }
 }

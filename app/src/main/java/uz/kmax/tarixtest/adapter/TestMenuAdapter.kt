@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
+import uz.kmax.tarixtest.R
 import uz.kmax.tarixtest.data.MenuTestData
 import uz.kmax.tarixtest.databinding.ItemTestMenuBinding
 
@@ -19,6 +20,11 @@ class TestMenuAdapter : RecyclerView.Adapter<TestMenuAdapter.HistoryViewHolder>(
         onTestItemClickListener = listener
     }
 
+    private var onDayHistoryClickListener: (() -> Unit)? = null
+    fun setOnDayHistoryClickListener(listener: () -> Unit) {
+        onDayHistoryClickListener = listener
+    }
+
     fun setData(data: ArrayList<MenuTestData>) {
         testData.clear()
         testData.addAll(data)
@@ -28,30 +34,41 @@ class TestMenuAdapter : RecyclerView.Adapter<TestMenuAdapter.HistoryViewHolder>(
     inner class HistoryViewHolder(var binding: ItemTestMenuBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bindData(data: MenuTestData) {
-            binding.testType.text = data.testType
-            binding.testCount.text = "${data.testCount} ta variant mavjud"
-            val storage = Firebase.storage.getReference("TarixTest")
-            val imageRef: StorageReference =
-                storage.child("Test").child(data.testLocation)
-                    .child("image.png")
+            if (data.testType != "Kun Tarixi") {
+                binding.testType.text = data.testType
+                binding.testCount.text = "${data.testCount} ta variant mavjud"
+                val storage = Firebase.storage.getReference("TarixTest")
+                val imageRef: StorageReference =
+                    storage.child("Test").child(data.testLocation)
+                        .child("image.png")
 
-            imageRef.getBytes(1024 * 1024)
-                .addOnSuccessListener { image ->
-                    binding.itemImage.setImageBitmap(
-                        BitmapFactory.decodeByteArray(
-                            image,
-                            0,
-                            image.size
+                imageRef.getBytes(1024 * 1024)
+                    .addOnSuccessListener { image ->
+                        binding.itemImage.setImageBitmap(
+                            BitmapFactory.decodeByteArray(
+                                image,
+                                0,
+                                image.size
+                            )
                         )
-                    )
+                    }
+                if (data.testNewOld == 1) {
+                    binding.testNewOld.visibility = View.VISIBLE
+                } else {
+                    binding.testNewOld.visibility = View.INVISIBLE
                 }
-            if (data.testNewOld == 1) {
-                binding.testNewOld.visibility = View.VISIBLE
+                binding.test.setOnClickListener {
+                    onTestItemClickListener?.invoke(data.testLocation, data.testCount)
+                }
             } else {
+                binding.testType.text = data.testType
+                binding.testCount.text = ""
                 binding.testNewOld.visibility = View.INVISIBLE
-            }
-            binding.test.setOnClickListener {
-                onTestItemClickListener?.invoke(data.testLocation, data.testCount)
+                binding.itemImage.setImageResource(R.drawable.calendar_24px)
+                binding.test.setOnClickListener {
+                    onDayHistoryClickListener?.invoke()
+                }
+
             }
         }
     }
@@ -65,4 +82,9 @@ class TestMenuAdapter : RecyclerView.Adapter<TestMenuAdapter.HistoryViewHolder>(
         holder.bindData(testData[position])
 
     override fun getItemCount() = testData.size
+
+//    val Int.toDp: Int
+//        get() = (this / Resources.getSystem().displayMetrics.density).toInt()
+//    val Int.toPx: Int
+//        get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 }

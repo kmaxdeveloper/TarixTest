@@ -13,4 +13,10 @@
     <string name="TestCompleted">Test Yakunlandi !</string>
     <string name="CorrectAnswer">To\'g\'ri javob : </string>
     <string name="WrongAnswer">Noto\'g\'ri javob : </string>
+    <string name="welcome_1">Hush Kelibsiz !</string>
+    <string name="welcome_2">Tarixdan Testlar</string>
+    <string name="welcome_3">Kun Tarixi</string>
+    <string name="welcome_4">Tarixga oid testlar to\'plami</string>
+    <string name="welcome_5">Vaqtingizni tejang !</string>
+    <string name="welcome_6">O\'z bilimingizni sinab ko\'ring</string>
 </resources>
