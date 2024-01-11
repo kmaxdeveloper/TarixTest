@@ -1,4 +1,4 @@
-package uz.kmax.tarixtest.fragment
+package uz.kmax.tarixtest.fragment.welcome
 
 import android.view.View
 import androidx.viewpager2.widget.ViewPager2
@@ -7,11 +7,11 @@ import uz.kmax.base.basefragment.BaseFragmentWC
 import uz.kmax.tarixtest.R
 import uz.kmax.tarixtest.adapter.TestViewPagerAdapter
 import uz.kmax.tarixtest.databinding.FragmentWelcomeBinding
-import uz.kmax.tarixtest.tools.SharedPref
+import uz.kmax.tarixtest.tools.other.SharedPref
 
 class WelcomeFragment: BaseFragmentWC<FragmentWelcomeBinding>(FragmentWelcomeBinding::inflate) {
-    lateinit var adapter: TestViewPagerAdapter
-    lateinit var shared: SharedPref
+    private lateinit var adapter: TestViewPagerAdapter
+    private lateinit var shared: SharedPref
     override fun onViewCreated() {
         shared = SharedPref(requireContext())
         adapter = TestViewPagerAdapter(requireContext())

@@ -1,4 +1,4 @@
-package uz.kmax.tarixtest.fragment
+package uz.kmax.tarixtest.fragment.main
 
 import android.icu.text.SimpleDateFormat
 import android.widget.Toast
@@ -15,7 +15,7 @@ import uz.kmax.tarixtest.databinding.FragmentDayOfHistoryBinding
 import uz.kmax.tarixtest.dialog.DialogDatePicker
 import java.util.Date
 
-class HistoryOfDayFragment : BaseFragmentWC<FragmentDayOfHistoryBinding>(FragmentDayOfHistoryBinding::inflate){
+class DayHistoryFragment : BaseFragmentWC<FragmentDayOfHistoryBinding>(FragmentDayOfHistoryBinding::inflate){
 
     private var dialog = DialogDatePicker()
     private var adapter = DayHistoryAdapter()
@@ -37,7 +37,7 @@ class HistoryOfDayFragment : BaseFragmentWC<FragmentDayOfHistoryBinding>(Fragmen
         getData()
 
         binding.back.setOnClickListener {
-            startMainFragment(MenuFragment())
+            startMainFragment(uz.kmax.tarixtest.fragment.main.MenuFragment())
         }
 
         dialog.setOnDateListener { monthX, dayX, yearX ->
@@ -91,7 +91,7 @@ class HistoryOfDayFragment : BaseFragmentWC<FragmentDayOfHistoryBinding>(Fragmen
 
                 override fun onCancelled(error: DatabaseError) {
                     dayHistorySize = 0
-                    startMainFragment(MenuFragment())
+                    startMainFragment(uz.kmax.tarixtest.fragment.main.MenuFragment())
                 }
             })
 

@@ -1,8 +1,7 @@
-package uz.kmax.tarixtest.ads
+package uz.kmax.tarixtest.tools.manager
 
 import android.app.Activity
 import android.content.Context
-import android.util.Log
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
@@ -12,7 +11,7 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 
-class GoogleAds() {
+class AdsManager() {
 
     lateinit var adRequest: AdRequest
     private var onAdDismissClickListener : (()-> Unit)? = null

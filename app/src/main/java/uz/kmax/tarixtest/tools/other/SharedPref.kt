@@ -1,4 +1,4 @@
-package uz.kmax.tarixtest.tools
+package uz.kmax.tarixtest.tools.other
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
@@ -13,7 +13,7 @@ class SharedPref(var context: Context) {
     private lateinit var editor: SharedPreferences.Editor
 
     init {
-        preferences = context.getSharedPreferences("PICS_GAME", MODE_PRIVATE)
+        preferences = context.getSharedPreferences("TARIX_TEST", MODE_PRIVATE)
     }
 
     fun getLanguage() = preferences.getString("LANG", "ru")
@@ -59,5 +59,15 @@ class SharedPref(var context: Context) {
         editor.apply()
     }
 
+    //available
+
     fun getWelcomeStatus() = preferences.getBoolean("WELCOME_APP",true)
+
+    fun setUpdateStatus(update : Boolean){
+        editor = preferences.edit()
+        editor.putBoolean("UPDATE_AVAILABLE",update)
+        editor.apply()
+    }
+
+    fun getUpdateAvailable() = preferences.getBoolean("UPDATE_AVAILABLE",false)
 }

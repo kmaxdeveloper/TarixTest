@@ -1,4 +1,4 @@
-package uz.kmax.tarixtest.tools
+package uz.kmax.tarixtest.tools.manager
 
 import uz.kmax.tarixtest.data.BaseTestData
 

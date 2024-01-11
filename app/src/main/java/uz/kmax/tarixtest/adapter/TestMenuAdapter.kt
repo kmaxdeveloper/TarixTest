@@ -1,6 +1,7 @@
 package uz.kmax.tarixtest.adapter
 
 import android.graphics.BitmapFactory
+import android.icu.text.SimpleDateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import com.google.firebase.storage.ktx.storage
 import uz.kmax.tarixtest.R
 import uz.kmax.tarixtest.data.MenuTestData
 import uz.kmax.tarixtest.databinding.ItemTestMenuBinding
+import java.util.Date
 
 class TestMenuAdapter : RecyclerView.Adapter<TestMenuAdapter.HistoryViewHolder>() {
 
@@ -20,9 +22,9 @@ class TestMenuAdapter : RecyclerView.Adapter<TestMenuAdapter.HistoryViewHolder>(
         onTestItemClickListener = listener
     }
 
-    private var onDayHistoryClickListener: (() -> Unit)? = null
-    fun setOnDayHistoryClickListener(listener: () -> Unit) {
-        onDayHistoryClickListener = listener
+    private var onTypeClickListener: ((type : Int,location : String) -> Unit)? = null
+    fun setOnTypeClickListener(listener: (type : Int,location : String) -> Unit) {
+        onTypeClickListener = listener
     }
 
     fun setData(data: ArrayList<MenuTestData>) {
@@ -34,41 +36,106 @@ class TestMenuAdapter : RecyclerView.Adapter<TestMenuAdapter.HistoryViewHolder>(
     inner class HistoryViewHolder(var binding: ItemTestMenuBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bindData(data: MenuTestData) {
-            if (data.testType != "Kun Tarixi") {
-                binding.testType.text = data.testType
-                binding.testCount.text = "${data.testCount} ta variant mavjud"
-                val storage = Firebase.storage.getReference("TarixTest")
-                val imageRef: StorageReference =
-                    storage.child("Test").child(data.testLocation)
-                        .child("image.png")
+            when (data.testType) {
+                0-> {
+                    binding.testName.text = data.testName
+                    binding.testCount.text = "Random"
 
-                imageRef.getBytes(1024 * 1024)
-                    .addOnSuccessListener { image ->
-                        binding.itemImage.setImageBitmap(
-                            BitmapFactory.decodeByteArray(
-                                image,
-                                0,
-                                image.size
+                    val storage = Firebase.storage.getReference("TarixTest")
+                    val imageRef: StorageReference =
+                        storage.child("Test").child(data.testLocation)
+                            .child("image.png")
+
+                    imageRef.getBytes(1024 * 1024)
+                        .addOnSuccessListener { image ->
+                            binding.itemImage.setImageBitmap(
+                                BitmapFactory.decodeByteArray(
+                                    image,
+                                    0,
+                                    image.size
+                                )
                             )
-                        )
+                        }
+                    if (data.testNewOld == 1) {
+                        binding.testNewOld.visibility = View.VISIBLE
+                    } else {
+                        binding.testNewOld.visibility = View.INVISIBLE
                     }
-                if (data.testNewOld == 1) {
-                    binding.testNewOld.visibility = View.VISIBLE
-                } else {
+                    binding.test.setOnClickListener {
+                        onTestItemClickListener?.invoke(data.testLocation, data.testCount)
+                    }
+                }
+                1-> {
+                    val day : String = SimpleDateFormat("dd").format(Date())
+                    val month : String = SimpleDateFormat("MM").format(Date())
+                    val year : String= SimpleDateFormat("yyyy").format(Date())
+                    binding.testName.text = data.testName
+                    binding.testCount.text = "${day}.${month}.${year}"
                     binding.testNewOld.visibility = View.INVISIBLE
-                }
-                binding.test.setOnClickListener {
-                    onTestItemClickListener?.invoke(data.testLocation, data.testCount)
-                }
-            } else {
-                binding.testType.text = data.testType
-                binding.testCount.text = ""
-                binding.testNewOld.visibility = View.INVISIBLE
-                binding.itemImage.setImageResource(R.drawable.calendar_24px)
-                binding.test.setOnClickListener {
-                    onDayHistoryClickListener?.invoke()
-                }
 
+                    val storage = Firebase.storage.getReference("TarixTest")
+                    val imageRef: StorageReference =
+                        storage.child("DayHistory").child("image.png")
+
+                    imageRef.getBytes(1024 * 1024)
+                        .addOnSuccessListener { image ->
+                            binding.itemImage.setImageBitmap(
+                                BitmapFactory.decodeByteArray(
+                                    image,
+                                    0,
+                                    image.size
+                                )
+                            )
+                        }
+                    binding.test.setOnClickListener {
+                        onTypeClickListener?.invoke(1,data.testLocation)
+                    }
+                }
+                2-> {
+                    val storage = Firebase.storage.getReference("TarixTest")
+                    val imageRef: StorageReference =
+                        storage.child("Message").child(data.testLocation)
+                            .child("image.png")
+
+                    imageRef.getBytes(1024 * 1024)
+                        .addOnSuccessListener { image ->
+                            binding.itemImage.setImageBitmap(
+                                BitmapFactory.decodeByteArray(
+                                    image,
+                                    0,
+                                    image.size
+                                )
+                            )
+                        }
+                    binding.testName.text = data.testName
+                    binding.testCount.text = "Message"
+                    binding.testNewOld.visibility = View.INVISIBLE
+                    binding.test.setOnClickListener {
+                        onTypeClickListener?.invoke(2,data.testLocation)
+                    }
+                }
+                3-> {
+                    val storage = Firebase.storage.getReference("TarixTest")
+                    val imageRef: StorageReference =
+                        storage.child("Update").child("image.png")
+
+                    imageRef.getBytes(1024 * 1024)
+                        .addOnSuccessListener { image ->
+                            binding.itemImage.setImageBitmap(
+                                BitmapFactory.decodeByteArray(
+                                    image,
+                                    0,
+                                    image.size
+                                )
+                            )
+                        }
+                    binding.testName.text = data.testName
+                    binding.testCount.text = (R.string.update).toString()
+                    binding.testNewOld.visibility = View.INVISIBLE
+                    binding.test.setOnClickListener {
+                        onTypeClickListener?.invoke(3,data.testLocation)
+                    }
+                }
             }
         }
     }
@@ -82,9 +149,4 @@ class TestMenuAdapter : RecyclerView.Adapter<TestMenuAdapter.HistoryViewHolder>(
         holder.bindData(testData[position])
 
     override fun getItemCount() = testData.size
-
-//    val Int.toDp: Int
-//        get() = (this / Resources.getSystem().displayMetrics.density).toInt()
-//    val Int.toPx: Int
-//        get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 }

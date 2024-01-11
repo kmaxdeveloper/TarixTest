@@ -1,11 +1,11 @@
-package uz.kmax.tarixtest.tools
+package uz.kmax.tarixtest.tools.manager
 
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 
-open class Connection {
+open class ConnectionManager {
     fun check(context: Context): Boolean {
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

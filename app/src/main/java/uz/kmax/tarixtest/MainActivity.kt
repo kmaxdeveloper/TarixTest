@@ -3,16 +3,13 @@ package uz.kmax.tarixtest
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat.Type.statusBars
-import nl.dionsegijn.konfetti.xml.KonfettiView
 import uz.kmax.base.fragmentcontroller.FragmentController
 import uz.kmax.tarixtest.databinding.ActivityMainBinding
-import uz.kmax.tarixtest.fragment.SplashFragment
-import uz.kmax.tarixtest.fragment.WelcomeFragment
-import uz.kmax.tarixtest.tools.SharedPref
+import uz.kmax.tarixtest.fragment.welcome.SplashFragment
+import uz.kmax.tarixtest.fragment.welcome.WelcomeFragment
+import uz.kmax.tarixtest.tools.other.SharedPref
 
 
 class MainActivity : AppCompatActivity() {

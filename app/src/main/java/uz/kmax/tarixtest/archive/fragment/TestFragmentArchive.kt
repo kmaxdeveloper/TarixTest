@@ -1,4 +1,4 @@
-package uz.kmax.tarixtest.fragment
+package uz.kmax.tarixtest.archive.fragment
 
 import android.graphics.Color
 import android.view.View
@@ -16,15 +16,16 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import uz.kmax.base.basefragment.BaseFragmentWC
 import uz.kmax.tarixtest.R
-import uz.kmax.tarixtest.ads.GoogleAds
+import uz.kmax.tarixtest.tools.manager.AdsManager
 import uz.kmax.tarixtest.data.BaseTestData
-import uz.kmax.tarixtest.databinding.FragmentTestBinding
+import uz.kmax.tarixtest.databinding.FragmentTestArchiveBinding
 import uz.kmax.tarixtest.dialog.DialogBack
 import uz.kmax.tarixtest.dialog.DialogEndTest
-import uz.kmax.tarixtest.tools.TestManager
+import uz.kmax.tarixtest.fragment.main.MenuFragment
+import uz.kmax.tarixtest.tools.manager.TestManager
 import kotlin.random.Random
 
-class TestFragment(testLocation: String, testCount : Int) : BaseFragmentWC<FragmentTestBinding>(FragmentTestBinding::inflate) {
+class TestFragmentArchive(testLocation: String, testCount : Int) : BaseFragmentWC<FragmentTestArchiveBinding>(FragmentTestArchiveBinding::inflate) {
     private var testLocationFragment: String = testLocation
     private var testCountFragment: Int = testCount
     private var testManager: TestManager = TestManager()
@@ -35,17 +36,17 @@ class TestFragment(testLocation: String, testCount : Int) : BaseFragmentWC<Fragm
     private var dialogEnd = DialogEndTest()
     private var dialogBack = DialogBack()
     private val db = Firebase.database
-    private var googleAds = GoogleAds()
+    private var adsManager = AdsManager()
 
     override fun onViewCreated() {
-        googleAds.initialize(requireContext())
+        adsManager.initialize(requireContext())
         startTest(testLocationFragment,testCountFragment)
     }
 
     override fun onResume() {
         super.onResume()
-        googleAds.initializeInterstitialAds(requireContext(),getString(R.string.interstitialAdsUnitId))
-        googleAds.initializeBanner(binding.bannerAds)
+        adsManager.initializeInterstitialAds(requireContext(),getString(R.string.interstitialAdsUnitId))
+        adsManager.initializeBanner(binding.bannerAds)
     }
 
     private fun startTest(testLocation: String,testCount: Int) {
@@ -212,15 +213,15 @@ class TestFragment(testLocation: String, testCount : Int) : BaseFragmentWC<Fragm
     }
 
     private fun ads(){
-        googleAds.showInterstitialAds(requireActivity())
-        googleAds.setOnAdsNotReadyListener {
+        adsManager.showInterstitialAds(requireActivity())
+        adsManager.setOnAdsNotReadyListener {
             startMainFragment(MenuFragment())
         }
 
-        googleAds.setOnAdDismissClickListener {
+        adsManager.setOnAdDismissClickListener {
             startMainFragment(MenuFragment())
         }
-        googleAds.setOnAdsClickListener {
+        adsManager.setOnAdsClickListener {
             Toast.makeText(requireContext(), "Thanks ! for clicking ads :D", Toast.LENGTH_SHORT).show()
         }
     }

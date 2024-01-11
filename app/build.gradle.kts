@@ -6,14 +6,14 @@ plugins {
 
 android {
     namespace = "uz.kmax.tarixtest"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "uz.kmax.tarixtest"
         minSdk = 24
-        targetSdk = 33
-        versionCode = 6
-        versionName = "1.2.5"
+        targetSdk = 34
+        versionCode = 7
+        versionName = "1.3.5"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -57,4 +57,5 @@ dependencies {
     implementation("nl.dionsegijn:konfetti-xml:2.0.3")
     implementation("nl.dionsegijn:konfetti:1.3.2")
     implementation ("com.airbnb.android:lottie:3.4.0")
+    implementation("com.google.android.play:app-update-ktx:2.1.0")
 }

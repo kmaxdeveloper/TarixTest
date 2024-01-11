@@ -129,28 +129,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                style="@style/VariantStyle"
-                android:padding="5dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp">
+            <androidx.appcompat.widget.LinearLayoutCompat style="@style/VariantStyle">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="A)"
-                    android:textStyle="bold"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="18sp"
-                    android:fontFamily="@font/pre_hear_regular"
-                    android:layout_marginStart="5dp" />
+                    android:src="@drawable/ic_radio_button_unchecked_black_24dp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/variantA"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
                     android:text="variant A"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -160,28 +151,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                style="@style/VariantStyle"
-                android:padding="5dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp">
+            <androidx.appcompat.widget.LinearLayoutCompat style="@style/VariantStyle">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="B)"
-                    android:textStyle="bold"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="18sp"
-                    android:fontFamily="@font/pre_hear_regular"
-                    android:layout_marginStart="5dp"/>
+                    android:src="@drawable/ic_radio_button_unchecked_black_24dp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/variantB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
                     android:text="variant A"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -191,28 +173,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                style="@style/VariantStyle"
-                android:padding="5dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp">
+            <androidx.appcompat.widget.LinearLayoutCompat style="@style/VariantStyle">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="C)"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/pre_hear_regular"
-                    android:layout_marginStart="5dp" />
+                    android:src="@drawable/ic_radio_button_unchecked_black_24dp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/variantC"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
                     android:text="variant A"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -222,28 +195,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                style="@style/VariantStyle"
-                android:padding="5dp"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp">
+            <androidx.appcompat.widget.LinearLayoutCompat style="@style/VariantStyle">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="D)"
-                    android:textStyle="bold"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="18sp"
-                    android:fontFamily="@font/pre_hear_regular"
-                    android:layout_marginStart="5dp" />
+                    android:src="@drawable/ic_radio_button_unchecked_black_24dp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/variantD"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
                     android:text="variant D"
                     android:textColor="@color/black"
                     android:textSize="16sp" />

@@ -17,7 +17,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:clickable">true</item>
-        <item name="android:background">?android:selectableItemBackground</item>
+        <item name="android:background">@drawable/style_test_default_answer</item>
         <item name="android:gravity">center</item>
         <item name="android:onClick">click</item>
     </style>
@@ -35,6 +35,19 @@
     </style>
     <style name="PrivacyPolicyTextStyle">
         <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="StyleTestCorrectAnswer">
+        <item name="android:background">@drawable/style_test_correct_answer</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="StyleTestWrongAnswer">
+        <item name="android:background">@drawable/style_test_correct_answer</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="StyleTestDefaultAnswer">
+        <item name="android:background">@drawable/style_test_correct_answer</item>
         <item name="android:textColor">@color/black</item>
     </style>
 </resources>

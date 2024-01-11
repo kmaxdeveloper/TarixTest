@@ -1,6 +1,5 @@
-package uz.kmax.tarixtest.fragment
+package uz.kmax.tarixtest.fragment.other
 
-import android.os.Build.VERSION
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
@@ -8,25 +7,26 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.play.core.review.ReviewException
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.android.play.core.review.model.ReviewErrorCode
-import uz.kmax.base.BuildConfig
 import uz.kmax.base.basefragment.BaseFragmentWC
 import uz.kmax.tarixtest.R
-import uz.kmax.tarixtest.databinding.FragmentAdminConnectionBinding
+import uz.kmax.tarixtest.databinding.FragmentPrivacyPolicyBinding
+import uz.kmax.tarixtest.fragment.main.MenuFragment
 
-class AdminConnectionFragment : BaseFragmentWC<FragmentAdminConnectionBinding>(FragmentAdminConnectionBinding::inflate) {
+class PrivacyFragment : BaseFragmentWC<FragmentPrivacyPolicyBinding>(FragmentPrivacyPolicyBinding::inflate) {
 
     private lateinit var toggleBar: ActionBarDrawerToggle
 
     override fun onViewCreated() {
+
         // DrawerLayout Code --
-        toggleBar = ActionBarDrawerToggle(requireActivity(),binding.AdminDrawerLayout,binding.toolbar, R.string.navigation_drawer_open,
+        toggleBar = ActionBarDrawerToggle(requireActivity(),binding.PrivacyDrawerLayout,binding.toolbar, R.string.navigation_drawer_open,
             R.string.navigation_drawer_close)
-        binding.AdminDrawerLayout.addDrawerListener(toggleBar)
+        binding.PrivacyDrawerLayout.addDrawerListener(toggleBar)
         toggleBar.syncState()
         // DrawerLayout Code --
 
         // Navigation View Code --
-        binding.navigationAdmin.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
+        binding.navigationPrivacy.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
             val id = item.itemId
             when (id) {
                 R.id.homePage ->{
@@ -60,24 +60,23 @@ class AdminConnectionFragment : BaseFragmentWC<FragmentAdminConnectionBinding>(F
                 }
 
                 R.id.devConnection -> {
+                    startMainFragment(AdminFragment())
                     closeDrawer()
                 }
 
-                R.id.privacyPolicy ->{
-                    closeDrawer()
-                    startMainFragment(PrivacyPolicyFragment())
-                }
+                R.id.privacyPolicy ->{ closeDrawer() }
 
                 else -> return@OnNavigationItemSelectedListener true
             }
             true
         })
         // Navigation View Code --
+
     }
 
     fun closeDrawer() {
-        if (binding.AdminDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-            binding.AdminDrawerLayout.closeDrawer(GravityCompat.START,true)
+        if (binding.PrivacyDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.PrivacyDrawerLayout.closeDrawer(GravityCompat.START,true)
         }
     }
 }

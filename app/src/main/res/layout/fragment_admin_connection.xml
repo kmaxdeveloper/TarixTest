@@ -45,6 +45,7 @@
                 android:layout_gravity="center"
                 android:text="Admin bilan"
                 android:textSize="24sp"
+                android:textColor="@color/black"
                 android:fontFamily="@font/pre_hear_regular"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
         <androidx.appcompat.widget.AppCompatTextView
@@ -74,6 +75,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/AdminGmail"
                 android:layout_marginStart="3dp"
+                android:textColor="@color/black"
                 android:fontFamily="@font/pre_hear_regular"
                 android:textSize="24sp"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -104,6 +106,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/AdminTelegram"
                 android:textSize="24sp"
+                android:textColor="@color/black"
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/pre_hear_regular"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -119,6 +122,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:textSize="24sp"
+            android:textColor="@color/black"
             android:fontFamily="@font/pre_hear_regular"
             android:text="orqali bog'lanishingiz mumkin!"/>
     </androidx.appcompat.widget.LinearLayoutCompat>

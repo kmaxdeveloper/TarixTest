@@ -19,4 +19,6 @@
     <string name="welcome_4">Tarixga oid testlar to\'plami</string>
     <string name="welcome_5">Vaqtingizni tejang !</string>
     <string name="welcome_6">O\'z bilimingizni sinab ko\'ring</string>
+    <string name="message">Message</string>
+    <string name="update">Update</string>
 </resources>
