@@ -35,8 +35,7 @@ class MessageFragment(messageLocation : String) : BaseFragmentWC<FragmentMessage
 
         // Navigation View Code --
         binding.navigationMenu.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
-            val id = item.itemId
-            when (id) {
+            when (item.itemId) {
                 R.id.homePage ->{
                     startMainFragment(MenuFragment())
                     binding.drawerLayout.isSelected = false

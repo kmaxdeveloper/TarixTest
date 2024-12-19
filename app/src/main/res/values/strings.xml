@@ -21,4 +21,5 @@
     <string name="welcome_6">O\'z bilimingizni sinab ko\'ring</string>
     <string name="message">Message</string>
     <string name="update">Update</string>
+    <string name="update_available">Yangi yangilanish mavjud. \n Dasturni yangilang !</string>
 </resources>

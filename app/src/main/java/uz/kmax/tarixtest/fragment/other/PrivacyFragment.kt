@@ -27,8 +27,7 @@ class PrivacyFragment : BaseFragmentWC<FragmentPrivacyPolicyBinding>(FragmentPri
 
         // Navigation View Code --
         binding.navigationPrivacy.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
-            val id = item.itemId
-            when (id) {
+            when (item.itemId) {
                 R.id.homePage ->{
                     closeDrawer()
                     startMainFragment(MenuFragment())

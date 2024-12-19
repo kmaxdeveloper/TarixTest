@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="test">Test</string>
+    <string name="exampleTest">Example Test</string>
+    <string name="warning">Warning !</string>
+    <string name="dialog_back_text">Agar Testdan chiqsangiz natijalaringiz saqlanmaydi !</string>
+    <string name="dialog_back_text2">Testdan chiqasizmi ?</string>
+    <string name="yes">Ha</string>
+    <string name="no">Yo\'q</string>
+    <string name="no_connection">No Connection</string>
+    <string name="dialog_return">Return</string>
+    <string name="close">Close</string>
+    <string name="ok">OK</string>
+    <string name="reStart">ReStart</string>
+    <string name="title">Title</string>
+    <string name="about">About</string>
+    <string name="text_A">A)</string>
+    <string name="text_B">B)</string>
+    <string name="text_C">C)</string>
+    <string name="text_D">D)</string>
+    <string name="back">Back</string>
+    <string name="finish">Finish</string>
+    <string name="next">Next</string>
+    <string name="start">Boshlash</string>
+    <string name="home">Bosh Menyu</string>
+    <string name="rating_app">Dasturni baholash</string>
+    <string name="connect_admin">Dasturchi bilan aloqa</string>
+    <string name="privacy_policy">Privacy Policy</string>
+</resources>

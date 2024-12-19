@@ -9,10 +9,10 @@ import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.android.play.core.review.model.ReviewErrorCode
 import uz.kmax.base.basefragment.BaseFragmentWC
 import uz.kmax.tarixtest.R
-import uz.kmax.tarixtest.databinding.FragmentAdminConnectionBinding
+import uz.kmax.tarixtest.databinding.FragmentAdminBinding
 import uz.kmax.tarixtest.fragment.main.MenuFragment
 
-class AdminFragment : BaseFragmentWC<FragmentAdminConnectionBinding>(FragmentAdminConnectionBinding::inflate) {
+class AdminFragment : BaseFragmentWC<FragmentAdminBinding>(FragmentAdminBinding::inflate) {
 
     private lateinit var toggleBar: ActionBarDrawerToggle
 

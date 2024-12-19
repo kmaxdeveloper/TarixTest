@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import uz.kmax.tarixtest.data.DayHistoryData
-import uz.kmax.tarixtest.databinding.ItemDayOfHistoryBinding
+import uz.kmax.tarixtest.databinding.ItemDayHistoryBinding
 
 class DayHistoryAdapter : RecyclerView.Adapter<DayHistoryAdapter.HistoryViewHolder>() {
 
@@ -16,7 +16,7 @@ class DayHistoryAdapter : RecyclerView.Adapter<DayHistoryAdapter.HistoryViewHold
         notifyDataSetChanged()
     }
 
-    inner class HistoryViewHolder(var binding: ItemDayOfHistoryBinding) :
+    inner class HistoryViewHolder(var binding: ItemDayHistoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bindData(data: DayHistoryData) {
             binding.storyOfDay.text = data.story
@@ -25,7 +25,7 @@ class DayHistoryAdapter : RecyclerView.Adapter<DayHistoryAdapter.HistoryViewHold
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         HistoryViewHolder(
-            ItemDayOfHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemDayHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) =

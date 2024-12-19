@@ -14,7 +14,7 @@ import uz.kmax.tarixtest.data.MenuTestData
 import uz.kmax.tarixtest.databinding.ItemTestMenuBinding
 import java.util.Date
 
-class TestMenuAdapter : RecyclerView.Adapter<TestMenuAdapter.HistoryViewHolder>() {
+class MenuAdapter : RecyclerView.Adapter<MenuAdapter.HistoryViewHolder>() {
 
     private var testData = ArrayList<MenuTestData>()
     private var onTestItemClickListener: ((testLocation: String, testCount: Int) -> Unit)? = null

@@ -24,7 +24,7 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/question_32px"
+                app:srcCompat="@drawable/image_question_32px"
                 android:layout_marginStart="10dp"
                 android:layout_gravity="center_vertical"/>
 
@@ -139,7 +139,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="A)"
+                    android:text="@string/text_A"
                     android:textStyle="bold"
                     android:layout_gravity="center_vertical"
                     android:textSize="18sp"
@@ -170,7 +170,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="B)"
+                    android:text="@string/text_B"
                     android:textStyle="bold"
                     android:layout_gravity="center_vertical"
                     android:textSize="18sp"
@@ -201,7 +201,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="C)"
+                    android:text="@string/text_C"
                     android:layout_gravity="center_vertical"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -232,7 +232,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:text="D)"
+                    android:text="@string/text_D"
                     android:textStyle="bold"
                     android:layout_gravity="center_vertical"
                     android:textSize="18sp"
@@ -273,7 +273,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
-        android:layout_marginBottom="5dp">
+        android:layout_marginBottom="15dp">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/back"
@@ -283,25 +283,25 @@
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:padding="10dp"
-            android:drawableStart="@drawable/back_32px"
+            android:drawableStart="@drawable/image_back_32px"
             android:background="@drawable/style_btn"
-            android:text="Back"
+            android:text="@string/back"
             android:textColor="@color/black"
             android:textSize="18sp" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/stopTest"
             android:layout_width="0dp"
-            android:layout_height="70dp"
+            android:layout_height="75dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:padding="8dp"
-            android:drawableEnd="@drawable/finish_32px"
+            android:drawableEnd="@drawable/image_finish_32px"
             android:background="@drawable/style_btn"
-            android:text="Finish"
+            android:text="@string/finish"
             android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/nextBtn"
@@ -311,8 +311,8 @@
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:background="@drawable/style_btn"
-            android:text="Next"
-            android:drawableEnd="@drawable/next_32px"
+            android:text="@string/next"
+            android:drawableEnd="@drawable/image_next_32px"
             android:padding="10dp"
             android:textColor="@color/black"
             android:textSize="18sp" />

@@ -15,7 +15,7 @@
             android:layout_height="?attr/actionBarSize"
             android:id="@+id/toolbar"
             app:titleTextColor="@color/black"
-            android:background="@color/whiteBlue"
+            android:background="@color/appTheme"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:title="@string/app_name"/>
@@ -35,7 +35,7 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
         app:itemTextColor="@color/black"
-        app:itemIconTint="@color/blue"
+        app:itemIconTint="@color/appTheme"
         android:background="@color/white"
         app:itemVerticalPadding="2dp"
         app:menu="@menu/nav_items" />

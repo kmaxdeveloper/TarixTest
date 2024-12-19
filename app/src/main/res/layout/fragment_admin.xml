@@ -37,7 +37,7 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="55dp"
                 android:layout_height="55dp"
-                app:srcCompat="@drawable/software_developer_512px"
+                app:srcCompat="@drawable/image_software_developer_512px"
                 android:padding="5dp"/>
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -63,7 +63,7 @@
                 android:layout_width="55dp"
                 android:layout_height="55dp"
                 android:padding="5dp"
-                app:srcCompat="@drawable/gmail_512px"/>
+                app:srcCompat="@drawable/image_gmail_512px"/>
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="3dp"
                 android:layout_height="match_parent"
@@ -94,7 +94,7 @@
                 android:layout_width="55dp"
                 android:layout_height="55dp"
                 android:padding="5dp"
-                app:srcCompat="@drawable/telegram_512px"/>
+                app:srcCompat="@drawable/image_telegram_512px"/>
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="3dp"
                 android:layout_height="match_parent"

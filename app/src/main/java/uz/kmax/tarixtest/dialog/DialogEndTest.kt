@@ -33,6 +33,17 @@ class DialogEndTest {
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCancelable(false)
 
+        var partyy = Party(
+            speed = 0f,
+            maxSpeed = 30f,
+            damping = 0.9f,
+            spread = 360,
+            timeToLive = 1000L,
+            colors = listOf(0xfce18a, 0xff726d, 0xf4306d, 0xb48def),
+            position = Position.Relative(0.5, 0.3),
+            emitter = Emitter(duration = 6, TimeUnit.MILLISECONDS).max(200).perSecond(300)
+        )
+
         val party = Party(
             colors = listOf(Color.YELLOW, Color.GREEN, Color.BLUE),
             angle = 0,

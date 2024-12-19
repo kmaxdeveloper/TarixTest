@@ -14,6 +14,7 @@ open class ConnectionManager {
             return when {
                 activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
                 activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+
                 else -> false
             }
         } else {
@@ -23,4 +24,6 @@ open class ConnectionManager {
             return networkInfo.isConnected
         }
     }
+
+
 }

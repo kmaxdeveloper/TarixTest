@@ -23,10 +23,8 @@ import uz.kmax.tarixtest.dialog.DialogEndTest
 import uz.kmax.tarixtest.tools.manager.TestManager
 import kotlin.random.Random
 
-class TestFragment(testLocation: String, testCount : Int) : BaseFragmentWC<FragmentTestBinding>(
-    FragmentTestBinding::inflate) {
-    private var testLocationFragment: String = testLocation
-    private var testCountFragment: Int = testCount
+class TestFragment(private var testLocation: String, private var testCount : Int) :
+    BaseFragmentWC<FragmentTestBinding>(FragmentTestBinding::inflate) {
     private var testManager: TestManager = TestManager()
     private val testLinearLayouts by lazy { ArrayList<LinearLayoutCompat>() }
     private val variantList by lazy { ArrayList<AppCompatTextView>() }
@@ -41,7 +39,7 @@ class TestFragment(testLocation: String, testCount : Int) : BaseFragmentWC<Fragm
 
     override fun onViewCreated() {
         adsManager.initialize(requireContext())
-        startTest(testLocationFragment,testCountFragment)
+        startTest(testLocation,testCount)
     }
 
     override fun onResume() {
@@ -109,6 +107,7 @@ class TestFragment(testLocation: String, testCount : Int) : BaseFragmentWC<Fragm
         variantList.add(binding.variantB)
         variantList.add(binding.variantC)
         variantList.add(binding.variantD)
+        variantList.shuffle()
 
         binding.testCountLayout[positionAnswer()].setBackgroundResource(R.drawable.style_position_answer)
 
@@ -193,7 +192,7 @@ class TestFragment(testLocation: String, testCount : Int) : BaseFragmentWC<Fragm
                     check(i)
                 }else{
                     Snackbar.make(binding.nextBtn, "Javob belgilangan keyingi savolga o'ting !", Snackbar.LENGTH_SHORT)
-                        .setBackgroundTint(Color.BLUE)
+                        .setBackgroundTint(Color.GREEN)
                         .setTextColor(Color.WHITE)
                         .show()
                 }

@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -11,12 +12,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:orientation="horizontal"
-        android:background="#02E6FB">
+        android:background="@color/whiteBlue">
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/back"
-            android:layout_width="50dp"
-            android:layout_height="45dp"
-            app:srcCompat="@drawable/left"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            app:srcCompat="@drawable/image_back"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="10dp"/>
         <androidx.appcompat.widget.Toolbar
@@ -24,7 +25,7 @@
             android:layout_height="?attr/actionBarSize"
             android:id="@+id/toolbar"
             app:titleTextColor="@color/black"
-            android:background="#02E6FB"
+            android:background="@color/whiteBlue"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:title="Kun Tarixi"/>

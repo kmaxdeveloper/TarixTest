@@ -5,16 +5,16 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import uz.kmax.base.basefragment.BaseFragmentWC
 import uz.kmax.tarixtest.R
-import uz.kmax.tarixtest.adapter.TestViewPagerAdapter
+import uz.kmax.tarixtest.adapter.WelcomeAdapter
 import uz.kmax.tarixtest.databinding.FragmentWelcomeBinding
 import uz.kmax.tarixtest.tools.other.SharedPref
 
 class WelcomeFragment: BaseFragmentWC<FragmentWelcomeBinding>(FragmentWelcomeBinding::inflate) {
-    private lateinit var adapter: TestViewPagerAdapter
+    private lateinit var adapter: WelcomeAdapter
     private lateinit var shared: SharedPref
     override fun onViewCreated() {
         shared = SharedPref(requireContext())
-        adapter = TestViewPagerAdapter(requireContext())
+        adapter = WelcomeAdapter(requireContext())
         binding.viewPager.adapter = adapter
         TabLayoutMediator(binding.indicator, binding.viewPager) { tab, position -> }.attach()
         binding.start.setOnClickListener {

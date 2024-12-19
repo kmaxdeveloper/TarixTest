@@ -5,16 +5,16 @@
 
     <group android:checkableBehavior="none">
         <item android:id="@+id/homePage"
-            android:title="Bosh Sahifa"
-            android:icon="@drawable/home"/>
+            android:title="@string/home"
+            android:icon="@drawable/image_home"/>
         <item android:id="@+id/ratingApp"
-            android:title="Dasturni baholash"
-            android:icon="@drawable/rating_128px"/>
+            android:title="@string/rating_app"
+            android:icon="@drawable/image_rating_128px"/>
         <item android:id="@+id/devConnection"
-            android:title="Dasturchi bilan aloqa"
-            android:icon="@drawable/dev_128px" />
+            android:title="@string/connect_admin"
+            android:icon="@drawable/image_dev_128px" />
         <item android:id="@+id/privacyPolicy"
-            android:title="Privacy Policy"
-            android:icon="@drawable/privacy_policy_128px"/>
+            android:title="@string/privacy_policy"
+            android:icon="@drawable/image_privacy_policy_128px"/>
     </group>
 </menu>

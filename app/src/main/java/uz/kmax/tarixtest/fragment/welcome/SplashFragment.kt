@@ -1,7 +1,10 @@
 package uz.kmax.tarixtest.fragment.welcome
 
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.CountDownTimer
+import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -14,40 +17,55 @@ import uz.kmax.tarixtest.data.CheckUpdateData
 import uz.kmax.tarixtest.tools.manager.ConnectionManager
 import uz.kmax.tarixtest.databinding.FragmentSplashBinding
 import uz.kmax.tarixtest.dialog.DialogConnection
+import uz.kmax.tarixtest.dialog.DialogUpdate
 import uz.kmax.tarixtest.fragment.main.MenuFragment
+import uz.kmax.tarixtest.tools.manager.NetworkMonitor
 import uz.kmax.tarixtest.tools.other.SharedPref
 import uz.kmax.tarixtest.tools.manager.UpdateManager
 import uz.kmax.tarixtest.tools.other.getAppVersion
-
 
 class SplashFragment : BaseFragmentWC<FragmentSplashBinding>(FragmentSplashBinding::inflate) {
     var connectionDialog = DialogConnection()
     private val db = Firebase.database
     var updateLevel: Int = 0
-    lateinit var update: UpdateManager
     lateinit var shared: SharedPref
+    var updateDialog = DialogUpdate()
+    lateinit var networkMonitor: NetworkMonitor
 
     override fun onViewCreated() {
-        update = UpdateManager(requireContext(),requireActivity())
-        update.init(requireContext())
+
         shared = SharedPref(requireContext())
-        checkUpdate()
-        update.setNotUpdateListener {
-            startApp()
-        }
-        update.setUpdateDismissListener {
+        val window = requireActivity().window
+        window.statusBarColor = this.resources.getColor(R.color.appTheme)
+
+        updateDialog.setOnUpdateNowListener {
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                data = Uri.parse(
+                    "https://play.google.com/store/apps/details?id=uz.kmax.tarixtest")
+                setPackage("com.android.vending")
+            }
+            startActivity(intent)
             activity?.finish()
         }
 
-        update.setOnFlexibleUpdateListener {
-            Snackbar.make(
-                requireActivity().findViewById(R.id.splashScreen),
-                "An update has just been downloaded.",
-                Snackbar.LENGTH_INDEFINITE
-            ).apply {
-                setAction("RESTART") { update.updateNow() }
-                setActionTextColor(Color.WHITE)
-                show()
+        updateDialog.setOnExitListener {
+            activity?.finish()
+        }
+
+        if (ConnectionManager().check(requireContext())) {
+            checkUpdate()
+        } else {
+            Toast.makeText(requireContext(), "No connection !", Toast.LENGTH_SHORT).show()
+            connectionDialog.show(requireContext())
+            connectionDialog.setOnCloseListener {
+                activity?.finish()
+            }
+            connectionDialog.setOnTryAgainListener {
+                if (ConnectionManager().check(requireContext())) {
+                    startMainFragment(MenuFragment())
+                } else {
+                    connectionDialog.show(requireContext())
+                }
             }
         }
     }
@@ -75,9 +93,9 @@ class SplashFragment : BaseFragmentWC<FragmentSplashBinding>(FragmentSplashBindi
                     if (currentAppVersion < status.versionCode) {
                         updateLevel = status.updateLevel
                         if (status.updateLevel >= 4) {
-                            update.update( 1)
+                            updateDialog.show(requireContext())
                         } else {
-                            update.update(2)
+                            startApp()
                             shared.setUpdateStatus(true)
                         }
                     } else {
@@ -85,12 +103,9 @@ class SplashFragment : BaseFragmentWC<FragmentSplashBinding>(FragmentSplashBindi
                     }
                 }
 
-                override fun onCancelled(error: DatabaseError) {
-                    update.update(1)
-                }
+                override fun onCancelled(error: DatabaseError) {}
             })
     }
-
 
     fun startApp() {
         object : CountDownTimer(3000, 100) {
@@ -111,20 +126,27 @@ class SplashFragment : BaseFragmentWC<FragmentSplashBinding>(FragmentSplashBindi
                     }
                 }
             }
-
-            override fun onTick(value: Long) {
-
-            }
+            override fun onTick(value: Long) {}
         }.start()
     }
 
-    override fun onResume() {
-        super.onResume()
-        update.onResume()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        update.onDestroy()
+    override fun onStart() {
+        super.onStart()
+        networkMonitor = NetworkMonitor(requireActivity().application)
+        networkMonitor.observe(requireActivity()){
+            if (!it){
+                connectionDialog.show(requireContext())
+                connectionDialog.setOnCloseListener {
+                    activity?.finish()
+                }
+                connectionDialog.setOnTryAgainListener {
+                    if (ConnectionManager().check(requireContext())) {
+                        startMainFragment(MenuFragment())
+                    } else {
+                        connectionDialog.show(requireContext())
+                    }
+                }
+            }
+        }
     }
 }

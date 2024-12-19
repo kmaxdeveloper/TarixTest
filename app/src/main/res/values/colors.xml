@@ -10,4 +10,12 @@
     <color name="white_yellow">#E6C107</color>
     <color name="white_blue">#00FFFF</color>
     <color name="whiteBlue">#02E6FB</color>
+    <color name="appTheme">@color/color_winter</color>
+    <color name="color_winter">#00EAFF</color>
+    <color name="color_winter_2">#00FFCC</color>
+    <color name="color_autumn">#FFC000</color>
+    <color name="color_spring">#1FD326</color>
+    <color name="color_summer">#FFE600</color>
+    <color name="color_item_menu_default">#4CAF50</color>
+    <color name="color_splash">#D7E8B475</color>
 </resources>

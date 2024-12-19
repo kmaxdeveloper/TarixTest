@@ -11,71 +11,49 @@ import com.google.firebase.ktx.Firebase
 import uz.kmax.base.basefragment.BaseFragmentWC
 import uz.kmax.tarixtest.adapter.DayHistoryAdapter
 import uz.kmax.tarixtest.data.DayHistoryData
-import uz.kmax.tarixtest.databinding.FragmentDayOfHistoryBinding
+import uz.kmax.tarixtest.databinding.FragmentDayHistoryBinding
 import uz.kmax.tarixtest.dialog.DialogDatePicker
 import java.util.Date
 
-class DayHistoryFragment : BaseFragmentWC<FragmentDayOfHistoryBinding>(FragmentDayOfHistoryBinding::inflate){
-
+class DayHistoryFragment : BaseFragmentWC<FragmentDayHistoryBinding>(FragmentDayHistoryBinding::inflate){
     private var dialog = DialogDatePicker()
     private var adapter = DayHistoryAdapter()
     private val db = Firebase.database
     private var dayHistorySize: Int = 0
     private var month: String = ""
     private var day: String = ""
+    private var language = "uz"
 
     override fun onViewCreated() {
 
-        var currentDayDate = SimpleDateFormat("dd")
-        var currentMonthDate = SimpleDateFormat("MM")
-
-        month = currentMonthDate.format(Date())
-        day = currentDayDate.format(Date())
+        month = SimpleDateFormat("MM").format(Date())
+        day = SimpleDateFormat("dd").format(Date())
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
         getData()
 
         binding.back.setOnClickListener {
-            startMainFragment(uz.kmax.tarixtest.fragment.main.MenuFragment())
+            startMainFragment(MenuFragment())
         }
 
-        dialog.setOnDateListener { monthX, dayX, yearX ->
-
-            if (yearX == 1970){
-                month = currentMonthDate.format(Date())
-                day = currentDayDate.format(Date())
-            }else {
-                val dayString = dayX.toString()
-                val monthString = monthX.toString()
-                val yearString = yearX.toString()
-
-                month = if (monthString.length <= 1) {
-                    "0$monthString"
-                } else {
-                    monthString
-                }
-
-                day = if (dayString.length <= 1) {
-                    "0$dayString"
-                } else {
-                    dayString
-                }
-            }
+        dialog.setOnDataPickerDateClickListener { monthM, dayM ->
+            month = monthM
+            day = dayM
+            Toast.makeText(requireContext(), "$dayM/$monthM/2024", Toast.LENGTH_SHORT).show()
 
             getData()
         }
 
         binding.setDateBtn.setOnClickListener {
-            dialog.show(requireContext())
-            Toast.makeText(requireContext(), "${day}.${month}.2023", Toast.LENGTH_SHORT).show()
+            dialog.show(requireActivity())
         }
 
     }
 
     private fun getData(){
         val dayList = ArrayList<DayHistoryData>()
-        db.getReference("TarixTest").child("KunTarixi").child(month).child(day)
+        db.getReference("TarixTest/KunTarixi").child(language).child(month).child(day)
             .child("kunTarixi").addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     snapshot.children.forEachIndexed { _, data ->
@@ -91,7 +69,7 @@ class DayHistoryFragment : BaseFragmentWC<FragmentDayOfHistoryBinding>(FragmentD
 
                 override fun onCancelled(error: DatabaseError) {
                     dayHistorySize = 0
-                    startMainFragment(uz.kmax.tarixtest.fragment.main.MenuFragment())
+                    startMainFragment(MenuFragment())
                 }
             })
 
