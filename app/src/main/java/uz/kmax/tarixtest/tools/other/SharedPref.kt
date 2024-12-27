@@ -16,7 +16,7 @@ class SharedPref(var context: Context) {
         preferences = context.getSharedPreferences("TARIX_TEST", MODE_PRIVATE)
     }
 
-    fun getLanguage() = preferences.getString("LANG", "ru")
+    fun getLanguage() = preferences.getString("LANG", "uz")
 
     fun loadLocale(context: Context) {
         setLanguage(getLanguage()!!, context)
@@ -62,6 +62,14 @@ class SharedPref(var context: Context) {
     //available
 
     fun getWelcomeStatus() = preferences.getBoolean("WELCOME_APP",true)
+
+    fun setLangStatus(lang : Boolean) {
+        editor = preferences.edit()
+        editor.putBoolean("LANG_APP",lang)
+        editor.apply()
+    }
+
+    fun getLangStatus() = preferences.getBoolean("LANG_APP", true)
 
     fun setUpdateStatus(update : Boolean){
         editor = preferences.edit()

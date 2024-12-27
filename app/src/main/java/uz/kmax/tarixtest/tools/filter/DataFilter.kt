@@ -1,4 +1,4 @@
-package uz.kmax.tarixtest.tools.other
+package uz.kmax.tarixtest.tools.filter
 
 import uz.kmax.tarixtest.data.MenuTestData
 

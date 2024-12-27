@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import uz.kmax.base.fragmentcontroller.FragmentController
 import uz.kmax.tarixtest.databinding.ActivityMainBinding
+import uz.kmax.tarixtest.fragment.tool.LanguageFragment
 import uz.kmax.tarixtest.fragment.welcome.WelcomeFragment
 import uz.kmax.tarixtest.fragment.welcome.SplashFragment
 import uz.kmax.tarixtest.tools.other.FullScreenCode
@@ -18,10 +19,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         shared = SharedPref(this)
         FragmentController.init(R.id.container, supportFragmentManager)
-        if (shared.getWelcomeStatus()){
-            FragmentController.controller?.startMainFragment(WelcomeFragment())
-        }else {
-            FragmentController.controller?.startMainFragment(SplashFragment())
+        if (!shared.getLangStatus()) {
+            if (shared.getWelcomeStatus()) {
+                FragmentController.controller?.startMainFragment(WelcomeFragment())
+            } else {
+                FragmentController.controller?.startMainFragment(SplashFragment())
+            }
+        }else{
+            FragmentController.controller?.startMainFragment(LanguageFragment())
         }
     }
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lang">Tilni Tanlang :</string>
+    <string name="language">uz</string>
+    <string name="lang_uz">uz</string>
+    <string name="lang_en">en</string>
+    <string name="lang_eng">ENGLISH</string>
+    <string name="lang_uzb">UZBEK</string>
+</resources>

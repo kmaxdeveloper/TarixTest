@@ -1,11 +1,9 @@
 package uz.kmax.tarixtest.fragment.welcome
 
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.os.CountDownTimer
 import android.widget.Toast
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -19,9 +17,9 @@ import uz.kmax.tarixtest.databinding.FragmentSplashBinding
 import uz.kmax.tarixtest.dialog.DialogConnection
 import uz.kmax.tarixtest.dialog.DialogUpdate
 import uz.kmax.tarixtest.fragment.main.MenuFragment
+import uz.kmax.tarixtest.fragment.main.TestListFragment
 import uz.kmax.tarixtest.tools.manager.NetworkMonitor
 import uz.kmax.tarixtest.tools.other.SharedPref
-import uz.kmax.tarixtest.tools.manager.UpdateManager
 import uz.kmax.tarixtest.tools.other.getAppVersion
 
 class SplashFragment : BaseFragmentWC<FragmentSplashBinding>(FragmentSplashBinding::inflate) {

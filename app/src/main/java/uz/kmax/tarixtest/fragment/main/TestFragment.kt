@@ -21,6 +21,7 @@ import uz.kmax.tarixtest.databinding.FragmentTestBinding
 import uz.kmax.tarixtest.dialog.DialogBack
 import uz.kmax.tarixtest.dialog.DialogEndTest
 import uz.kmax.tarixtest.tools.manager.TestManager
+import uz.kmax.tarixtest.tools.other.SharedPref
 import kotlin.random.Random
 
 class TestFragment(private var testLocation: String, private var testCount : Int) :
@@ -36,8 +37,12 @@ class TestFragment(private var testLocation: String, private var testCount : Int
     private var dialogBack = DialogBack()
     private val db = Firebase.database
     private var adsManager = AdsManager()
+    lateinit var sharedPref: SharedPref
+    private var language = "uz"
 
     override fun onViewCreated() {
+        sharedPref = SharedPref(requireContext())
+        language = sharedPref.getLanguage().toString()
         adsManager.initialize(requireContext())
         startTest(testLocation,testCount)
     }
@@ -51,7 +56,7 @@ class TestFragment(private var testLocation: String, private var testCount : Int
     private fun startTest(testLocation: String,testCount: Int) {
         val listTest = ArrayList<BaseTestData>()
         val randomTest = random(testCount)
-        db.getReference("TarixTest").child("Test").child("uz").child(testLocation)
+        db.getReference("TarixTest").child("Test").child(language).child(testLocation)
             .child("V$randomTest").addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     snapshot.children.forEachIndexed { _, data ->

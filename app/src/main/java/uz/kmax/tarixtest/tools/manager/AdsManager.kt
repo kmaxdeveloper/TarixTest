@@ -2,6 +2,7 @@ package uz.kmax.tarixtest.tools.manager
 
 import android.app.Activity
 import android.content.Context
+import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
@@ -59,6 +60,11 @@ class AdsManager() {
                 mInterstitialAd = null
                 onAdDismissClickListener?.invoke()
             }
+
+            override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+                super.onAdFailedToShowFullScreenContent(p0)
+            }
+
             override fun onAdImpression() {}
             override fun onAdShowedFullScreenContent() {}
         }

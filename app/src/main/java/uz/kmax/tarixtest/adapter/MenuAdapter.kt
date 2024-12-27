@@ -40,22 +40,7 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.HistoryViewHolder>() {
                 0-> {
                     binding.testName.text = data.testName
                     binding.testCount.text = "Random"
-
-                    val storage = Firebase.storage.getReference("TarixTest")
-                    val imageRef: StorageReference =
-                        storage.child("Test").child(data.testLocation)
-                            .child("image.png")
-
-                    imageRef.getBytes(1024 * 1024)
-                        .addOnSuccessListener { image ->
-                            binding.itemImage.setImageBitmap(
-                                BitmapFactory.decodeByteArray(
-                                    image,
-                                    0,
-                                    image.size
-                                )
-                            )
-                        }
+                    setDataToView(binding,"Test/${data.testLocation}")
                     if (data.testNewOld == 1) {
                         binding.testNewOld.visibility = View.VISIBLE
                     } else {
@@ -72,41 +57,13 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.HistoryViewHolder>() {
                     binding.testName.text = data.testName
                     binding.testCount.text = "${day}.${month}.${year}"
                     binding.testNewOld.visibility = View.INVISIBLE
-
-                    val storage = Firebase.storage.getReference("TarixTest")
-                    val imageRef: StorageReference =
-                        storage.child("DayHistory").child("image.png")
-
-                    imageRef.getBytes(1024 * 1024)
-                        .addOnSuccessListener { image ->
-                            binding.itemImage.setImageBitmap(
-                                BitmapFactory.decodeByteArray(
-                                    image,
-                                    0,
-                                    image.size
-                                )
-                            )
-                        }
+                    setDataToView(binding,"DayHistory")
                     binding.test.setOnClickListener {
                         onTypeClickListener?.invoke(1,data.testLocation)
                     }
                 }
                 2-> {
-                    val storage = Firebase.storage.getReference("TarixTest")
-                    val imageRef: StorageReference =
-                        storage.child("Message").child(data.testLocation)
-                            .child("image.png")
-
-                    imageRef.getBytes(1024 * 1024)
-                        .addOnSuccessListener { image ->
-                            binding.itemImage.setImageBitmap(
-                                BitmapFactory.decodeByteArray(
-                                    image,
-                                    0,
-                                    image.size
-                                )
-                            )
-                        }
+                    setDataToView(binding,"Message/${data.testLocation}")
                     binding.testName.text = data.testName
                     binding.testCount.text = "Message"
                     binding.testNewOld.visibility = View.INVISIBLE
@@ -115,20 +72,7 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.HistoryViewHolder>() {
                     }
                 }
                 3-> {
-                    val storage = Firebase.storage.getReference("TarixTest")
-                    val imageRef: StorageReference =
-                        storage.child("Update").child("image.png")
-
-                    imageRef.getBytes(1024 * 1024)
-                        .addOnSuccessListener { image ->
-                            binding.itemImage.setImageBitmap(
-                                BitmapFactory.decodeByteArray(
-                                    image,
-                                    0,
-                                    image.size
-                                )
-                            )
-                        }
+                    setDataToView(binding,"Update")
                     binding.testName.text = data.testName
                     binding.testCount.text = (R.string.update).toString()
                     binding.testNewOld.visibility = View.INVISIBLE
@@ -138,6 +82,23 @@ class MenuAdapter : RecyclerView.Adapter<MenuAdapter.HistoryViewHolder>() {
                 }
             }
         }
+    }
+
+    fun setDataToView(binding: ItemTestMenuBinding,path : String){
+        val storage = Firebase.storage.getReference("TarixTest")
+        val imageRef: StorageReference =
+            storage.child(path).child("image.png")
+
+        imageRef.getBytes(1024 * 1024)
+            .addOnSuccessListener { image ->
+                binding.itemImage.setImageBitmap(
+                    BitmapFactory.decodeByteArray(
+                        image,
+                        0,
+                        image.size
+                    )
+                )
+            }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =

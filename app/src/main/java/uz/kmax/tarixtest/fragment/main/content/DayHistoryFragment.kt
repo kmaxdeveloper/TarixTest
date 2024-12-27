@@ -1,4 +1,4 @@
-package uz.kmax.tarixtest.fragment.main
+package uz.kmax.tarixtest.fragment.main.content
 
 import android.icu.text.SimpleDateFormat
 import android.widget.Toast
@@ -9,10 +9,14 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import uz.kmax.base.basefragment.BaseFragmentWC
+import uz.kmax.tarixtest.R
 import uz.kmax.tarixtest.adapter.DayHistoryAdapter
 import uz.kmax.tarixtest.data.DayHistoryData
 import uz.kmax.tarixtest.databinding.FragmentDayHistoryBinding
 import uz.kmax.tarixtest.dialog.DialogDatePicker
+import uz.kmax.tarixtest.fragment.main.MenuFragment
+import uz.kmax.tarixtest.fragment.main.TestListFragment
+import uz.kmax.tarixtest.tools.other.SharedPref
 import java.util.Date
 
 class DayHistoryFragment : BaseFragmentWC<FragmentDayHistoryBinding>(FragmentDayHistoryBinding::inflate){
@@ -23,11 +27,14 @@ class DayHistoryFragment : BaseFragmentWC<FragmentDayHistoryBinding>(FragmentDay
     private var month: String = ""
     private var day: String = ""
     private var language = "uz"
+    lateinit var sharedPref: SharedPref
 
     override fun onViewCreated() {
 
         month = SimpleDateFormat("MM").format(Date())
         day = SimpleDateFormat("dd").format(Date())
+        sharedPref = SharedPref(requireContext())
+        language = sharedPref.getLanguage().toString()
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
