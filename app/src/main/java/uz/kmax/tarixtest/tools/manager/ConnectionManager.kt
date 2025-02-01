@@ -16,6 +16,4 @@ open class ConnectionManager {
             else -> false
         }
     }
-
-
 }

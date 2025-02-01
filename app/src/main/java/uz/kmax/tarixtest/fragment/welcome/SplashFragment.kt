@@ -4,34 +4,29 @@ import android.content.Intent
 import android.net.Uri
 import android.os.CountDownTimer
 import android.widget.Toast
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import uz.kmax.base.basefragment.BaseFragmentWC
+import uz.kmax.base.fragment.BaseFragmentWC
 import uz.kmax.tarixtest.R
-import uz.kmax.tarixtest.data.CheckUpdateData
+import uz.kmax.tarixtest.data.tool.CheckUpdateData
 import uz.kmax.tarixtest.tools.manager.ConnectionManager
 import uz.kmax.tarixtest.databinding.FragmentSplashBinding
 import uz.kmax.tarixtest.dialog.DialogConnection
 import uz.kmax.tarixtest.dialog.DialogUpdate
 import uz.kmax.tarixtest.fragment.main.MenuFragment
-import uz.kmax.tarixtest.fragment.main.TestListFragment
+import uz.kmax.tarixtest.tools.firebase.FirebaseManager
 import uz.kmax.tarixtest.tools.manager.NetworkMonitor
-import uz.kmax.tarixtest.tools.other.SharedPref
-import uz.kmax.tarixtest.tools.other.getAppVersion
+import uz.kmax.tarixtest.tools.tools.SharedPref
+import uz.kmax.tarixtest.tools.tools.getAppVersion
 
 class SplashFragment : BaseFragmentWC<FragmentSplashBinding>(FragmentSplashBinding::inflate) {
     var connectionDialog = DialogConnection()
-    private val db = Firebase.database
-    var updateLevel: Int = 0
     lateinit var shared: SharedPref
     var updateDialog = DialogUpdate()
     lateinit var networkMonitor: NetworkMonitor
+    lateinit var firebaseManager: FirebaseManager
+    var updateInfo : Boolean = true
 
     override fun onViewCreated() {
-
+        firebaseManager = FirebaseManager("App")
         shared = SharedPref(requireContext())
         val window = requireActivity().window
         window.statusBarColor = this.resources.getColor(R.color.appTheme)
@@ -46,12 +41,13 @@ class SplashFragment : BaseFragmentWC<FragmentSplashBinding>(FragmentSplashBindi
             activity?.finish()
         }
 
-        updateDialog.setOnExitListener {
-            activity?.finish()
-        }
+        updateDialog.setOnExitListener { activity?.finish() }
+        progress()
+    }
 
+    fun progress(){
         if (ConnectionManager().check(requireContext())) {
-            checkUpdate()
+            checkUp()
         } else {
             Toast.makeText(requireContext(), "No connection !", Toast.LENGTH_SHORT).show()
             connectionDialog.show(requireContext())
@@ -60,7 +56,7 @@ class SplashFragment : BaseFragmentWC<FragmentSplashBinding>(FragmentSplashBindi
             }
             connectionDialog.setOnTryAgainListener {
                 if (ConnectionManager().check(requireContext())) {
-                    startMainFragment(MenuFragment())
+                    checkUp()
                 } else {
                     connectionDialog.show(requireContext())
                 }
@@ -68,41 +64,31 @@ class SplashFragment : BaseFragmentWC<FragmentSplashBinding>(FragmentSplashBindi
         }
     }
 
-    private fun checkUpdate() {
-        val allUpdatesList = ArrayList<CheckUpdateData>()
-        db.getReference("App").child("TarixTest").child("Update")
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    snapshot.children.forEachIndexed { _, data ->
-                        val h = data.getValue(CheckUpdateData::class.java)
-                        h?.let {
-                            allUpdatesList.add(
-                                CheckUpdateData(
-                                    it.updateLevel,
-                                    it.versionCode,
-                                    it.versionName
-                                )
-                            )
-                        }
-                    }
-                    // yuklangandan so'ng
-                    val status = allUpdatesList[allUpdatesList.size - 1]
-                    val currentAppVersion: Long = getAppVersion(requireContext())!!.versionNumber
-                    if (currentAppVersion < status.versionCode) {
-                        updateLevel = status.updateLevel
-                        if (status.updateLevel >= 4) {
+    fun checkUp(){
+        firebaseManager.observeList("TarixTest/Update/", CheckUpdateData::class.java) { list ->
+            if (list != null) {
+                val currentAppVersion: Long = getAppVersion(requireContext())!!.versionNumber
+                for (i in 0 until list.size){
+                    if (currentAppVersion < list[i].versionCode) {
+                        if (list[i].updateLevel >= 4) {
+                            updateInfo = false
                             updateDialog.show(requireContext())
                         } else {
                             startApp()
                             shared.setUpdateStatus(true)
                         }
-                    } else {
-                        startApp()
                     }
                 }
+                if (updateInfo){
+                    startApp()
+                }
+            }
+        }
+    }
 
-                override fun onCancelled(error: DatabaseError) {}
-            })
+    override fun onResume() {
+        super.onResume()
+        progress()
     }
 
     fun startApp() {

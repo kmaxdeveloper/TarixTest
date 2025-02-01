@@ -1,6 +1,6 @@
 package uz.kmax.tarixtest.tools.manager
 
-import uz.kmax.tarixtest.data.BaseTestData
+import uz.kmax.tarixtest.data.main.BaseTestData
 
 
 class TestManager() {
@@ -25,6 +25,12 @@ class TestManager() {
 
     fun getVariantA(): String {
         return testQuestionsList[currentQuestionPosition].variantA
+    }
+
+    fun getPercent(): Double {
+        var percent = 0.0
+        percent = ((100 / getQuestionSize()) * correctAnswerCount).toDouble()
+        return percent
     }
 
     fun getVariantB(): String {

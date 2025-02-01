@@ -9,14 +9,13 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.play.core.review.ReviewException
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.google.android.play.core.review.model.ReviewErrorCode
-import uz.kmax.base.basefragment.BaseFragmentWC
+import uz.kmax.base.fragment.BaseFragmentWC
+import uz.kmax.base.fragmentcontroller.InnerFragmentController
 import uz.kmax.tarixtest.R
 import uz.kmax.tarixtest.databinding.FragmentMenuBinding
-import uz.kmax.tarixtest.expriment.fragment.TestListFragment2
 import uz.kmax.tarixtest.fragment.other.AdminFragment
 import uz.kmax.tarixtest.fragment.other.PrivacyFragment
 import uz.kmax.tarixtest.fragment.tool.SettingsFragment
-import uz.kmax.tarixtest.tools.manager.InnerFragmentController
 
 class MenuFragment : BaseFragmentWC<FragmentMenuBinding>(FragmentMenuBinding::inflate) {
     private lateinit var toggleBar: ActionBarDrawerToggle

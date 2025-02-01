@@ -1,35 +1,17 @@
 package uz.kmax.tarixtest.adapter
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import uz.kmax.tarixtest.data.DayHistoryData
+import uz.kmax.base.recycleview.BaseRecycleViewDU
+import uz.kmax.tarixtest.data.main.DayHistoryData
 import uz.kmax.tarixtest.databinding.ItemDayHistoryBinding
 
-class DayHistoryAdapter : RecyclerView.Adapter<DayHistoryAdapter.HistoryViewHolder>() {
+class DayHistoryAdapter : BaseRecycleViewDU<ItemDayHistoryBinding, DayHistoryData>(ItemDayHistoryBinding::inflate) {
 
-    private var dayHistoryData = ArrayList<DayHistoryData>()
-
-    fun setData(data: ArrayList<DayHistoryData>) {
-        dayHistoryData.clear()
-        dayHistoryData.addAll(data)
-        notifyDataSetChanged()
+    override fun bind(binding: ItemDayHistoryBinding, item: DayHistoryData) {
+        binding.storyOfDay.text = item.story
     }
 
-    inner class HistoryViewHolder(var binding: ItemDayHistoryBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bindData(data: DayHistoryData) {
-            binding.storyOfDay.text = data.story
-        }
-    }
+    override fun areContentsTheSame(oldItem: DayHistoryData, newItem: DayHistoryData) = oldItem == newItem
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        HistoryViewHolder(
-            ItemDayHistoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        )
+    override fun areItemsTheSame(oldItem: DayHistoryData, newItem: DayHistoryData) = oldItem.story == newItem.story
 
-    override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) =
-        holder.bindData(dayHistoryData[position])
-
-    override fun getItemCount() = dayHistoryData.size
 }

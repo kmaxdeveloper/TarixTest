@@ -2,92 +2,132 @@ package uz.kmax.tarixtest.tools.manager
 
 import android.app.Activity
 import android.content.Context
-import com.google.android.gms.ads.AdError
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.FullScreenContentCallback
-import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.MobileAds
+import android.util.Log
+import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 
-class AdsManager() {
+class AdsManager {
 
-    lateinit var adRequest: AdRequest
-    private var onAdDismissClickListener : (()-> Unit)? = null
-    fun setOnAdDismissClickListener(f: ()-> Unit){ onAdDismissClickListener = f }
-
-    private var onAdsClickedListener : (()-> Unit)? = null
-    fun setOnAdsClickListener(f: ()-> Unit){ onAdsClickedListener = f }
-
-    private var onAdsNotReadyListener : (()-> Unit)? = null
-    fun setOnAdsNotReadyListener(f: ()-> Unit){ onAdsNotReadyListener = f }
-
-    private var onAdsNullOrNonNullListener : ((status : Boolean)-> Unit)? = null
-    fun setOnAdsNullListener(f : (status : Boolean)-> Unit){
-        onAdsNullOrNonNullListener = f
-    }
-
+    private lateinit var adRequest: AdRequest
     private var mInterstitialAd: InterstitialAd? = null
+    private var isAdLoading: Boolean = false
 
-    fun initialize(context: Context){
-        MobileAds.initialize(context) {}
+    private var onAdDismissListener: (() -> Unit)? = null
+    private var onAdClickListener: (() -> Unit)? = null
+    private var onAdNotReadyListener: (() -> Unit)? = null
+    private var onAdLoadStatusListener: ((Boolean) -> Unit)? = null
+
+    fun initialize(context: Context) {
+        MobileAds.initialize(context) {
+            Log.d("AdsManager", "MobileAds initialized.")
+        }
         adRequest = AdRequest.Builder().build()
     }
 
-    fun initializeInterstitialAds(context: Context, adUnit : String){
-        InterstitialAd.load(context,adUnit, adRequest, object : InterstitialAdLoadCallback() {
-            override fun onAdFailedToLoad(adError: LoadAdError) {
-                mInterstitialAd = null
-                onAdsNullOrNonNullListener?.invoke(false)
-            }
-
-            override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                mInterstitialAd = interstitialAd
-                onAdsNullOrNonNullListener?.invoke(true)
-                callbackInterstitialAds()
-            }
-        })
+    fun setOnAdDismissListener(listener: () -> Unit) {
+        onAdDismissListener = listener
     }
 
-    private fun callbackInterstitialAds(){
-        mInterstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
-            override fun onAdClicked() {
-                onAdsClickedListener?.invoke()
+    fun setOnAdClickListener(listener: () -> Unit) {
+        onAdClickListener = listener
+    }
+
+    fun setOnAdNotReadyListener(listener: () -> Unit) {
+        onAdNotReadyListener = listener
+    }
+
+    fun setOnAdLoadStatusListener(listener: (Boolean) -> Unit) {
+        onAdLoadStatusListener = listener
+    }
+
+    fun loadInterstitialAd(context: Context, adUnit: String) {
+        if (isAdLoading) {
+            Log.w("AdsManager", "Ad is already loading.")
+            return
+        }
+
+        isAdLoading = true
+        InterstitialAd.load(
+            context, adUnit, adRequest,
+            object : InterstitialAdLoadCallback() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    mInterstitialAd = null
+                    isAdLoading = false
+                    onAdLoadStatusListener?.invoke(false)
+                    Log.e("AdsManager", "Interstitial ad failed to load: ${adError.message}")
+                }
+
+                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                    mInterstitialAd = interstitialAd
+                    isAdLoading = false
+                    onAdLoadStatusListener?.invoke(true)
+                    setupInterstitialAdCallbacks()
+                    Log.d("AdsManager", "Interstitial ad loaded successfully.")
+                }
             }
+        )
+    }
+
+    private fun setupInterstitialAdCallbacks() {
+        mInterstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
+            override fun onAdClicked() {
+                onAdClickListener?.invoke()
+                Log.d("AdsManager", "Interstitial ad clicked.")
+            }
+
             override fun onAdDismissedFullScreenContent() {
                 mInterstitialAd = null
-                onAdDismissClickListener?.invoke()
+                onAdDismissListener?.invoke()
+                Log.d("AdsManager", "Interstitial ad dismissed.")
             }
 
-            override fun onAdFailedToShowFullScreenContent(p0: AdError) {
-                super.onAdFailedToShowFullScreenContent(p0)
+            override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                Log.e("AdsManager", "Interstitial ad failed to show: ${adError.message}")
             }
 
-            override fun onAdImpression() {}
-            override fun onAdShowedFullScreenContent() {}
+            override fun onAdShowedFullScreenContent() {
+                Log.d("AdsManager", "Interstitial ad is showing.")
+                mInterstitialAd = null // Prevent reuse
+            }
         }
     }
 
-    fun showInterstitialAds(activity: Activity){
+    fun showInterstitialAd(activity: Activity) {
         if (mInterstitialAd != null) {
             mInterstitialAd?.show(activity)
         } else {
-            onAdsNotReadyListener?.invoke()
+            onAdNotReadyListener?.invoke()
+            Log.w("AdsManager", "Interstitial ad is not ready to be shown.")
         }
     }
 
-    fun initializeBanner(adView: AdView){
+    fun loadBannerAd(adView: AdView) {
         adView.loadAd(adRequest)
-
         adView.adListener = object : AdListener() {
-            override fun onAdClicked() {}
-            override fun onAdClosed() {}
-            override fun onAdFailedToLoad(adError : LoadAdError) {}
-            override fun onAdImpression() {}
-            override fun onAdLoaded() {}
-            override fun onAdOpened() {}
+            override fun onAdClicked() {
+                Log.d("AdsManager", "Banner ad clicked.")
+            }
+
+            override fun onAdClosed() {
+                Log.d("AdsManager", "Banner ad closed.")
+            }
+
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                Log.e("AdsManager", "Banner ad failed to load: ${adError.message}")
+            }
+
+            override fun onAdLoaded() {
+                Log.d("AdsManager", "Banner ad loaded successfully.")
+            }
+
+            override fun onAdOpened() {
+                Log.d("AdsManager", "Banner ad opened.")
+            }
         }
+    }
+
+    fun isAdReady(): Boolean {
+        return mInterstitialAd != null
     }
 }

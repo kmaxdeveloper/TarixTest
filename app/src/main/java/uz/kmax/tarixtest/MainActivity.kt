@@ -5,10 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import uz.kmax.base.fragmentcontroller.FragmentController
 import uz.kmax.tarixtest.databinding.ActivityMainBinding
 import uz.kmax.tarixtest.fragment.tool.LanguageFragment
-import uz.kmax.tarixtest.fragment.welcome.WelcomeFragment
 import uz.kmax.tarixtest.fragment.welcome.SplashFragment
-import uz.kmax.tarixtest.tools.other.FullScreenCode
-import uz.kmax.tarixtest.tools.other.SharedPref
+import uz.kmax.tarixtest.fragment.welcome.WelcomeFragment
+import uz.kmax.tarixtest.tools.tools.SharedPref
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding

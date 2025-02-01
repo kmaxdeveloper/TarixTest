@@ -1,4 +1,4 @@
-package uz.kmax.tarixtest.tools.other
+package uz.kmax.tarixtest.tools.tools
 
 import android.content.Context
 import android.content.pm.PackageManager

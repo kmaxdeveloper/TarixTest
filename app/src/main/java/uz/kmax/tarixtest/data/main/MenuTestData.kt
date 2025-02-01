@@ -1,4 +1,4 @@
-package uz.kmax.tarixtest.data
+package uz.kmax.tarixtest.data.main
 
 data class MenuTestData(
     var testAnyWay: Int = 0,

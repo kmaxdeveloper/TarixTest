@@ -3,34 +3,28 @@ package uz.kmax.tarixtest.fragment.main.content
 import android.icu.text.SimpleDateFormat
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import uz.kmax.base.basefragment.BaseFragmentWC
-import uz.kmax.tarixtest.R
+import uz.kmax.base.fragment.BaseFragmentWC
 import uz.kmax.tarixtest.adapter.DayHistoryAdapter
-import uz.kmax.tarixtest.data.DayHistoryData
+import uz.kmax.tarixtest.data.main.DayHistoryData
 import uz.kmax.tarixtest.databinding.FragmentDayHistoryBinding
 import uz.kmax.tarixtest.dialog.DialogDatePicker
 import uz.kmax.tarixtest.fragment.main.MenuFragment
-import uz.kmax.tarixtest.fragment.main.TestListFragment
-import uz.kmax.tarixtest.tools.other.SharedPref
+import uz.kmax.tarixtest.tools.firebase.FirebaseManager
+import uz.kmax.tarixtest.tools.tools.SharedPref
 import java.util.Date
 
 class DayHistoryFragment : BaseFragmentWC<FragmentDayHistoryBinding>(FragmentDayHistoryBinding::inflate){
     private var dialog = DialogDatePicker()
     private var adapter = DayHistoryAdapter()
-    private val db = Firebase.database
     private var dayHistorySize: Int = 0
     private var month: String = ""
     private var day: String = ""
     private var language = "uz"
     lateinit var sharedPref: SharedPref
+    lateinit var firebaseManager: FirebaseManager
 
     override fun onViewCreated() {
-
+        firebaseManager = FirebaseManager("TarixTest/Content")
         month = SimpleDateFormat("MM").format(Date())
         day = SimpleDateFormat("dd").format(Date())
         sharedPref = SharedPref(requireContext())
@@ -48,7 +42,6 @@ class DayHistoryFragment : BaseFragmentWC<FragmentDayHistoryBinding>(FragmentDay
             month = monthM
             day = dayM
             Toast.makeText(requireContext(), "$dayM/$monthM/2024", Toast.LENGTH_SHORT).show()
-
             getData()
         }
 
@@ -59,26 +52,11 @@ class DayHistoryFragment : BaseFragmentWC<FragmentDayHistoryBinding>(FragmentDay
     }
 
     private fun getData(){
-        val dayList = ArrayList<DayHistoryData>()
-        db.getReference("TarixTest/KunTarixi").child(language).child(month).child(day)
-            .child("kunTarixi").addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    snapshot.children.forEachIndexed { _, data ->
-                        val h = data.getValue(DayHistoryData::class.java)
-                        h?.let {
-                            dayList.add(DayHistoryData(story = it.story))
-                        }
-                    }
-                    // ad
-                    dayHistorySize = dayList.size
-                    adapter.setData(dayList)
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    dayHistorySize = 0
-                    startMainFragment(MenuFragment())
-                }
-            })
-
+        firebaseManager.observeList("$language/KunTarixi/$month/$day/kunTarixi", DayHistoryData::class.java){
+            if (it != null) {
+                dayHistorySize = it.size
+                adapter.setItems(it)
+            }
+        }
     }
 }

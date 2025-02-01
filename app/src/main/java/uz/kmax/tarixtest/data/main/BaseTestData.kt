@@ -1,4 +1,4 @@
-package uz.kmax.tarixtest.data
+package uz.kmax.tarixtest.data.main
 
 class BaseTestData(
     var answer: String = "", var question: String = "",

@@ -1,12 +1,11 @@
 package uz.kmax.tarixtest.fragment.tool
 
 import android.content.Intent
-import uz.kmax.base.basefragment.BaseFragmentWC
+import uz.kmax.base.fragment.BaseFragmentWC
 import uz.kmax.tarixtest.MainActivity
 import uz.kmax.tarixtest.R
 import uz.kmax.tarixtest.databinding.FragmentSettingsBinding
-import uz.kmax.tarixtest.tools.inter.FragmentInterface
-import uz.kmax.tarixtest.tools.other.SharedPref
+import uz.kmax.tarixtest.tools.tools.SharedPref
 
 class SettingsFragment : BaseFragmentWC<FragmentSettingsBinding>(FragmentSettingsBinding::inflate) {
     lateinit var sharedPref: SharedPref

@@ -3,11 +3,11 @@ package uz.kmax.tarixtest.fragment.welcome
 import android.view.View
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
-import uz.kmax.base.basefragment.BaseFragmentWC
+import uz.kmax.base.fragment.BaseFragmentWC
 import uz.kmax.tarixtest.R
 import uz.kmax.tarixtest.adapter.WelcomeAdapter
 import uz.kmax.tarixtest.databinding.FragmentWelcomeBinding
-import uz.kmax.tarixtest.tools.other.SharedPref
+import uz.kmax.tarixtest.tools.tools.SharedPref
 
 class WelcomeFragment: BaseFragmentWC<FragmentWelcomeBinding>(FragmentWelcomeBinding::inflate) {
     private lateinit var adapter: WelcomeAdapter

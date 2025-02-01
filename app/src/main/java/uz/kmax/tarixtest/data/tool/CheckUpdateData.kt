@@ -1,4 +1,4 @@
-package uz.kmax.tarixtest.data
+package uz.kmax.tarixtest.data.tool
 
 class CheckUpdateData(
     var updateLevel: Int = 0,

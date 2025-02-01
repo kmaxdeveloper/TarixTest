@@ -1,71 +1,45 @@
 package uz.kmax.tarixtest.fragment.main
 
-import android.graphics.Color
-import android.icu.text.SimpleDateFormat
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import uz.kmax.base.basefragment.BaseFragmentWC
+import uz.kmax.base.fragment.BaseFragmentWC
 import uz.kmax.tarixtest.R
-import uz.kmax.tarixtest.adapter.MenuAdapter
-import uz.kmax.tarixtest.data.CheckUpdateData
-import uz.kmax.tarixtest.tools.manager.AdsManager
-import uz.kmax.tarixtest.data.MenuTestData
+import uz.kmax.tarixtest.adapter.TestListAdapter
+import uz.kmax.tarixtest.data.main.MenuTestData
 import uz.kmax.tarixtest.databinding.FragmentTestListBinding
 import uz.kmax.tarixtest.dialog.DialogConnection
-import uz.kmax.tarixtest.fragment.main.content.DayHistoryFragment
-import uz.kmax.tarixtest.fragment.other.MessageFragment
-import uz.kmax.tarixtest.fragment.other.UpdateFragment
 import uz.kmax.tarixtest.tools.manager.ConnectionManager
-import uz.kmax.tarixtest.tools.manager.UpdateManager
-import uz.kmax.tarixtest.tools.filter.DataFilter
 import uz.kmax.tarixtest.tools.filter.TypeFilter
-import uz.kmax.tarixtest.tools.other.SharedPref
-import uz.kmax.tarixtest.tools.other.getAppVersion
-import java.util.Date
+import uz.kmax.tarixtest.tools.firebase.FirebaseManager
+import uz.kmax.tarixtest.tools.manager.AdsManager
+import uz.kmax.tarixtest.tools.tools.SharedPref
 
 class TestListFragment : BaseFragmentWC<FragmentTestListBinding>(FragmentTestListBinding::inflate) {
-    val adapter by lazy { MenuAdapter() }
-    private val db = Firebase.database
+    val adapter by lazy { TestListAdapter() }
+    lateinit var firebaseManager: FirebaseManager
     private var connectionDialog = DialogConnection()
     private var adsManager = AdsManager()
     private lateinit var shared: SharedPref
-    lateinit var update: UpdateManager
     private var dataFilter = TypeFilter()
     private var adsStatus = false
-    private var updateLevel: Int = 0
-    private var date: String = ""
     private var language = "uz"
 
     override fun onViewCreated() {
-        val window = requireActivity().window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-        window.statusBarColor = this.resources.getColor(R.color.appTheme)
+        firebaseManager = FirebaseManager("TarixTest")
         shared = SharedPref(requireContext())
         language = shared.getLanguage().toString()
-        update = UpdateManager(requireContext())
-        update.init(requireContext())
-
         adsManager.initialize(requireContext())
 
-        //
-        val currentDayDate: String = SimpleDateFormat("dd").format(Date())
-        val currentMonthDate: String = SimpleDateFormat("MM").format(Date())
-        val currentYearDate: String = SimpleDateFormat("yyyy").format(Date())
+        adsManager.loadInterstitialAd(requireContext(), getString(R.string.interstitialAdsUnitId))
+        adsManager.setOnAdLoadStatusListener {
+            adsStatus = it
+        }
 
-        date = "${currentDayDate}.${currentMonthDate}.${currentYearDate}"
-        //
-        addTestData()
+        getTestData()
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
-        adapter.setOnTestItemClickListener { testLocation, testCount ->
+
+        adapter.setOnTaskListener { testCount, testLocation ->
             if (ConnectionManager().check(requireContext())) {
                 ads(testLocation, testCount)
             } else {
@@ -82,73 +56,34 @@ class TestListFragment : BaseFragmentWC<FragmentTestListBinding>(FragmentTestLis
                 }
             }
         }
-        adapter.setOnTypeClickListener { it, location ->
-            if (ConnectionManager().check(requireContext())) {
-                ads(it, location)
-            } else {
-                connectionDialog.show(requireContext())
-                connectionDialog.setOnCloseListener {
-                    activity?.finish()
-                }
-                connectionDialog.setOnTryAgainListener {
-                    if (ConnectionManager().check(requireContext())) {
-                        ads(it, location)
-                    } else {
-                        connectionDialog.show(requireContext())
-                    }
-                }
+    }
+
+    private fun getTestData() {
+        firebaseManager.observeList("AllTest/$language", MenuTestData::class.java){
+            if (it != null) {
+                adapter.setItems(dataFilter.filter(it, 0))
             }
         }
     }
 
-    private fun addTestData() {
-        val menuTestDataArray = ArrayList<MenuTestData>()
-        db.getReference("TarixTest").child("AllTest").child(language)
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    snapshot.children.forEachIndexed { _, data ->
-                        val h = data.getValue(MenuTestData::class.java)
-                        h?.let {
-                            if (it.testVisibility == 1) {
-                                menuTestDataArray.add(
-                                    MenuTestData(
-                                        it.testAnyWay,
-                                        it.testCount,
-                                        it.testLocation,
-                                        it.testName,
-                                        it.testNewOld,
-                                        it.testType,
-                                        it.testVisibility
-                                    )
-                                )
-                            }
-                        }
-                    }
-                    adapter.setData(dataFilter.filter(menuTestDataArray, 0))
-                }
-
-                override fun onCancelled(error: DatabaseError) {}
-            })
-    }
-
     override fun onResume() {
         super.onResume()
-        adsManager.initializeInterstitialAds(
+        adsManager.loadInterstitialAd(
             requireContext(),
             getString(R.string.interstitialAdsUnitId)
         )
-        adsManager.setOnAdsNullListener {
+        adsManager.setOnAdLoadStatusListener {
             adsStatus = it
         }
     }
 
     private fun ads(testLocation: String, testCount: Int) {
         if (adsStatus) {
-            adsManager.showInterstitialAds(requireActivity())
-            adsManager.setOnAdsNotReadyListener {
+            adsManager.showInterstitialAd(requireActivity())
+            adsManager.setOnAdNotReadyListener {
                 replaceFragment(TestFragment(testLocation, testCount))
             }
-            adsManager.setOnAdDismissClickListener {
+            adsManager.setOnAdDismissListener {
                 replaceFragment(
                     TestFragment(
                         testLocation,
@@ -156,112 +91,22 @@ class TestListFragment : BaseFragmentWC<FragmentTestListBinding>(FragmentTestLis
                     )
                 )
             }
-            adsManager.setOnAdsClickListener {
-                toast("Thanks ! for clicking ads :D")
+            adsManager.setOnAdClickListener {
+                Toast.makeText(requireContext(), "Thanks ! for clicking ads :D", Toast.LENGTH_SHORT).show()
             }
         } else {
             replaceFragment(TestFragment(testLocation, testCount))
         }
     }
 
-    private fun ads(type: Int, location: String) {
-        if (adsStatus) {
-            adsManager.showInterstitialAds(requireActivity())
-            adsManager.setOnAdsNotReadyListener {
-                replace(type, location)
-            }
-            adsManager.setOnAdDismissClickListener {
-                replace(type, location)
-            }
-            adsManager.setOnAdsClickListener {
-                toast("Thanks ! for clicking ads :D")
-            }
-        } else {
-            replace(type, location)
+    override fun onStart() {
+        super.onStart()
+        adsManager.loadInterstitialAd(
+            requireContext(),
+            getString(R.string.interstitialAdsUnitId)
+        )
+        adsManager.setOnAdLoadStatusListener {
+            adsStatus = it
         }
-    }
-
-    private fun toast(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-    }
-
-    private fun replace(type: Int, location: String) {
-        when (type) {
-            1 -> {
-                replaceFragment(DayHistoryFragment())
-            }
-
-            2 -> {
-                replaceFragment(MessageFragment(location))
-            }
-
-            3 -> {
-                replaceFragment(UpdateFragment(location))
-            }
-        }
-    }
-
-    fun checking() {
-        update.setNotUpdateListener {
-            toast("Not Update !")
-        }
-        update.setUpdateDismissListener {
-            activity?.finish()
-        }
-
-        update.setOnFlexibleUpdateListener {
-            Snackbar.make(
-                requireActivity().findViewById(R.id.splashScreen),
-                "An update has just been downloaded.",
-                Snackbar.LENGTH_INDEFINITE
-            ).apply {
-                setAction("RESTART") { update.updateNow() }
-                setActionTextColor(Color.WHITE)
-                show()
-            }
-        }
-    }
-
-    private fun checkUpdate() {
-        val allUpdatesList = ArrayList<CheckUpdateData>()
-        db.getReference("App").child("TarixTest").child("Update")
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    snapshot.children.forEachIndexed { _, data ->
-                        val h = data.getValue(CheckUpdateData::class.java)
-                        h?.let {
-                            allUpdatesList.add(
-                                CheckUpdateData(
-                                    it.updateLevel,
-                                    it.versionCode,
-                                    it.versionName
-                                )
-                            )
-                        }
-                    }
-                    // yuklangandan so'ng
-                    Toast.makeText(requireContext(), "Data is loaded !", Toast.LENGTH_SHORT).show()
-                    val status = allUpdatesList[allUpdatesList.size - 1]
-                    val currentAppVersion: Long = getAppVersion(requireContext())!!.versionNumber
-                    if (currentAppVersion < status.versionCode) {
-                        updateLevel = status.updateLevel
-                        if (status.updateLevel >= 4) {
-                            Toast.makeText(requireContext(), "Update 1", Toast.LENGTH_SHORT).show()
-                            update.update(1)
-                        } else {
-                            Toast.makeText(requireContext(), "Update 2", Toast.LENGTH_SHORT).show()
-                            update.update(2)
-                            shared.setUpdateStatus(true)
-                        }
-                    } else {
-                        toast("NOT UPDATE YET !")
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    toast("Not UPD")
-                    update.update(1)
-                }
-            })
     }
 }

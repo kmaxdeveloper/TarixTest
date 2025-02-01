@@ -8,20 +8,16 @@ import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.view.get
 import androidx.core.view.size
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
-import uz.kmax.base.basefragment.BaseFragmentWC
+import uz.kmax.base.fragment.BaseFragmentWC
 import uz.kmax.tarixtest.R
-import uz.kmax.tarixtest.tools.manager.AdsManager
-import uz.kmax.tarixtest.data.BaseTestData
+import uz.kmax.tarixtest.data.main.BaseTestData
 import uz.kmax.tarixtest.databinding.FragmentTestBinding
 import uz.kmax.tarixtest.dialog.DialogBack
 import uz.kmax.tarixtest.dialog.DialogEndTest
+import uz.kmax.tarixtest.tools.firebase.FirebaseManager
+import uz.kmax.tarixtest.tools.manager.AdsManager
 import uz.kmax.tarixtest.tools.manager.TestManager
-import uz.kmax.tarixtest.tools.other.SharedPref
+import uz.kmax.tarixtest.tools.tools.SharedPref
 import kotlin.random.Random
 
 class TestFragment(private var testLocation: String, private var testCount : Int) :
@@ -30,59 +26,45 @@ class TestFragment(private var testLocation: String, private var testCount : Int
     private val testLinearLayouts by lazy { ArrayList<LinearLayoutCompat>() }
     private val variantList by lazy { ArrayList<AppCompatTextView>() }
     private lateinit var testStatus: ArrayList<AppCompatTextView>
+    lateinit var firebaseManager: FirebaseManager
     private var variantSelected = false
     private var testStatusCount = 0
     private var countTest = 0
     private var dialogEnd = DialogEndTest()
     private var dialogBack = DialogBack()
-    private val db = Firebase.database
     private var adsManager = AdsManager()
     lateinit var sharedPref: SharedPref
     private var language = "uz"
 
     override fun onViewCreated() {
         sharedPref = SharedPref(requireContext())
+        firebaseManager = FirebaseManager("TarixTest")
         language = sharedPref.getLanguage().toString()
         adsManager.initialize(requireContext())
+        adsManager.loadInterstitialAd(requireContext(),getString(R.string.interstitialAdsUnitId))
+        adsManager.loadBannerAd(binding.bannerAds)
         startTest(testLocation,testCount)
     }
 
     override fun onResume() {
         super.onResume()
-        adsManager.initializeInterstitialAds(requireContext(),getString(R.string.interstitialAdsUnitId))
-        adsManager.initializeBanner(binding.bannerAds)
+        adsManager.loadInterstitialAd(requireContext(),getString(R.string.interstitialAdsUnitId))
+        adsManager.loadBannerAd(binding.bannerAds)
     }
 
     private fun startTest(testLocation: String,testCount: Int) {
-        val listTest = ArrayList<BaseTestData>()
         val randomTest = random(testCount)
-        db.getReference("TarixTest").child("Test").child(language).child(testLocation)
-            .child("V$randomTest").addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    snapshot.children.forEachIndexed { _, data ->
-                        val h = data.getValue(BaseTestData::class.java)
-                        h?.let {
-                            listTest.add(
-                                BaseTestData(
-                                    it.answer,
-                                    it.question,
-                                    it.variantA,
-                                    it.variantB,
-                                    it.variantC,
-                                    it.variantD
-                                )
-                            )
-                        }
-                    }
-                    listTest.shuffle()
-                    countTest = listTest.size
-                    testManager.setTestList(listTest)
-                    loadView()
-                    loadDataToView()
-                }
-
-                override fun onCancelled(error: DatabaseError) {}
-            })
+        firebaseManager.observeList("Test/$language/$testLocation/V$randomTest", BaseTestData::class.java){
+            if (it != null){
+                val listTest = ArrayList<BaseTestData>()
+                listTest.addAll(it)
+                listTest.shuffle()
+                countTest = listTest.size
+                testManager.setTestList(listTest)
+                loadView()
+                loadDataToView()
+            }
+        }
     }
 
     private fun variantStyleRestart(){
@@ -90,7 +72,6 @@ class TestFragment(private var testLocation: String, private var testCount : Int
             testLinearLayouts[i].setBackgroundResource(R.drawable.style_test_default_answer)
         }
     }
-
     private fun loadView() {
         testStatus = ArrayList()
         for (i in 0 until binding.testCountLayout.size) {
@@ -132,7 +113,6 @@ class TestFragment(private var testLocation: String, private var testCount : Int
             }
         }
     }
-
     fun next() {
         if (variantSelected) {
             if (testManager.hasNextQuestion()) {
@@ -177,7 +157,6 @@ class TestFragment(private var testLocation: String, private var testCount : Int
                 .show()
         }
     }
-
     private fun loadDataToView() {
         binding.question.text = testManager.getQuestion()
         variantList[0].text = testManager.getVariantA()
@@ -204,7 +183,6 @@ class TestFragment(private var testLocation: String, private var testCount : Int
             }
         }
     }
-
     private fun check(position: Int){
         testManager.checkAnswer(variantList[position].text.toString())
         if (testManager.checkAnswerBoolean(variantList[position].text.toString())){
@@ -224,7 +202,6 @@ class TestFragment(private var testLocation: String, private var testCount : Int
             }
         }
     }
-
     private fun countUp() {
         if (testStatusCount == countTest || testStatusCount > countTest) {
             testStatusCount = 0
@@ -232,7 +209,6 @@ class TestFragment(private var testLocation: String, private var testCount : Int
             testStatusCount++
         }
     }
-
     private fun random(testCount: Int):Int{
         val random = Random.nextInt(0,testCount)
         if (random == 0){
@@ -242,21 +218,19 @@ class TestFragment(private var testLocation: String, private var testCount : Int
         }
         return random
     }
-
     private fun ads(){
-        adsManager.showInterstitialAds(requireActivity())
-        adsManager.setOnAdsNotReadyListener {
+        adsManager.showInterstitialAd(requireActivity())
+        adsManager.setOnAdNotReadyListener {
             startMainFragment(MenuFragment())
         }
 
-        adsManager.setOnAdDismissClickListener {
+        adsManager.setOnAdDismissListener {
             startMainFragment(MenuFragment())
         }
-        adsManager.setOnAdsClickListener {
+        adsManager.setOnAdClickListener {
             Toast.makeText(requireContext(), "Thanks ! for clicking ads :D", Toast.LENGTH_SHORT).show()
         }
     }
-
     private fun positionAnswer():Int{
         if (testStatusCount == countTest){
             return countTest - 1
