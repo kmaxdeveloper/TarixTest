@@ -18,18 +18,18 @@ import uz.kmax.tarixtest.tools.tools.SharedPref
 import uz.kmax.tarixtest.tools.tools.getAppVersion
 
 class SplashFragment : BaseFragmentWC<FragmentSplashBinding>(FragmentSplashBinding::inflate) {
-    var connectionDialog = DialogConnection()
-    lateinit var shared: SharedPref
-    var updateDialog = DialogUpdate()
-    lateinit var networkMonitor: NetworkMonitor
-    lateinit var firebaseManager: FirebaseManager
-    var updateInfo : Boolean = true
+    private var connectionDialog = DialogConnection()
+    private lateinit var shared: SharedPref
+    private var updateDialog = DialogUpdate()
+    private lateinit var networkMonitor: NetworkMonitor
+    private lateinit var firebaseManager: FirebaseManager
+    private var updateInfo : Boolean = true
 
     override fun onViewCreated() {
-        firebaseManager = FirebaseManager("App")
+        firebaseManager = FirebaseManager()
         shared = SharedPref(requireContext())
         val window = requireActivity().window
-        window.statusBarColor = this.resources.getColor(R.color.appTheme)
+        window.statusBarColor = this.resources.getColor(R.color.color_app)
 
         updateDialog.setOnUpdateNowListener {
             val intent = Intent(Intent.ACTION_VIEW).apply {
@@ -45,9 +45,9 @@ class SplashFragment : BaseFragmentWC<FragmentSplashBinding>(FragmentSplashBindi
         progress()
     }
 
-    fun progress(){
+    private fun progress(){
         if (ConnectionManager().check(requireContext())) {
-            checkUp()
+            checkUpdate()
         } else {
             Toast.makeText(requireContext(), "No connection !", Toast.LENGTH_SHORT).show()
             connectionDialog.show(requireContext())
@@ -56,7 +56,7 @@ class SplashFragment : BaseFragmentWC<FragmentSplashBinding>(FragmentSplashBindi
             }
             connectionDialog.setOnTryAgainListener {
                 if (ConnectionManager().check(requireContext())) {
-                    checkUp()
+                    checkUpdate()
                 } else {
                     connectionDialog.show(requireContext())
                 }
@@ -64,8 +64,8 @@ class SplashFragment : BaseFragmentWC<FragmentSplashBinding>(FragmentSplashBindi
         }
     }
 
-    fun checkUp(){
-        firebaseManager.observeList("TarixTest/Update/", CheckUpdateData::class.java) { list ->
+    private fun checkUpdate(){
+        firebaseManager.observeList("Update/AppUpdate", CheckUpdateData::class.java) { list ->
             if (list != null) {
                 val currentAppVersion: Long = getAppVersion(requireContext())!!.versionNumber
                 for (i in 0 until list.size){

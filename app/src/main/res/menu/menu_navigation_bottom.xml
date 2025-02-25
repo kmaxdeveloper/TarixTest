@@ -8,5 +8,5 @@
         android:icon="@drawable/image_content" />
     <item android:id="@+id/action_settings"
         android:title="@string/menuSettings"
-        android:icon="@drawable/image_settings"/>
+        android:icon="@drawable/image_settings_2"/>
 </menu>

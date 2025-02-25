@@ -7,11 +7,11 @@ import uz.kmax.tarixtest.tools.firebase.FirebaseManager
 
 class MessageFragment(messageLocation : String) : BaseFragmentWC<FragmentMessageBinding>(FragmentMessageBinding::inflate) {
     private var messageLoc = messageLocation
-    lateinit var firebaseManager: FirebaseManager
+    private lateinit var firebaseManager: FirebaseManager
     var language = "uz"
 
     override fun onViewCreated() {
-        firebaseManager = FirebaseManager("TarixTest")
+        firebaseManager = FirebaseManager()
         getMessage(messageLoc)
     }
 

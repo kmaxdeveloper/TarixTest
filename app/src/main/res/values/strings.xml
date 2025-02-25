@@ -17,12 +17,16 @@
     <string name="welcome_2">Tarixdan Testlar</string>
     <string name="welcome_3">Kun Tarixi</string>
     <string name="welcome_4">Tarixga oid testlar to\'plami</string>
-    <string name="welcome_5">Vaqtingizni tejang !</string>
-    <string name="welcome_6">O\'z bilimingizni sinab ko\'ring</string>
+    <string name="welcome_5">O\'z bilimingizni sinab ko\'ring</string>
     <string name="message">Message</string>
     <string name="update">Update</string>
     <string name="update_available">Yangi yangilanish mavjud. \n Dasturni yangilang !</string>
     <string name="menuHome">Home</string>
     <string name="menuContent">Content</string>
     <string name="menuSettings">Settings</string>
+    <string name="bookSize">Kitob hajmi :</string>
+    <string name="bookRelease">Kitob yili : </string>
+    <string name="bookTitle">Book Title : </string>
+    <string name="contentWarningInfo">Bu Kontent Sizning Dastur Versiyangizda ishlamaydi . Dasturnni yangilang !</string>
+    <string name="books">Maktab Darsliklari</string>
 </resources>

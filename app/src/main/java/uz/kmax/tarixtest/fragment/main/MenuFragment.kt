@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.whenCreated
 import com.google.android.material.navigation.NavigationView
 import com.google.android.play.core.review.ReviewException
 import com.google.android.play.core.review.ReviewManagerFactory
@@ -16,10 +17,13 @@ import uz.kmax.tarixtest.databinding.FragmentMenuBinding
 import uz.kmax.tarixtest.fragment.other.AdminFragment
 import uz.kmax.tarixtest.fragment.other.PrivacyFragment
 import uz.kmax.tarixtest.fragment.tool.SettingsFragment
+import uz.kmax.tarixtest.tools.tools.getFragmentResult
 
 class MenuFragment : BaseFragmentWC<FragmentMenuBinding>(FragmentMenuBinding::inflate) {
     private lateinit var toggleBar: ActionBarDrawerToggle
     override fun onViewCreated() {
+        val window = requireActivity().window
+        window.statusBarColor = this.resources.getColor(R.color.appTheme)
 
         InnerFragmentController.init(R.id.innerContainer, requireActivity().supportFragmentManager)
         replaceInnerFragment(TestListFragment())
@@ -36,6 +40,7 @@ class MenuFragment : BaseFragmentWC<FragmentMenuBinding>(FragmentMenuBinding::in
 
         binding.bottomNavigation.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.appTheme))
         binding.bottomNavigation.itemIconTintList = null
+
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when(item.itemId) {
                 R.id.action_home -> {

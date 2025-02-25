@@ -2,9 +2,9 @@ package uz.kmax.tarixtest.tools.firebase
 
 import com.google.firebase.database.*
 
-class FirebaseManager(reference : String) {
+class FirebaseManager() {
 
-    val database = FirebaseDatabase.getInstance().getReference(reference)
+    private val database = FirebaseDatabase.getInstance().getReference("TarixTest")
 
     // Bir martalik ma'lumot o'qish
     fun <T> readData(path: String, clazz: Class<T>, onComplete: (T?, String?) -> Unit) {
@@ -36,6 +36,23 @@ class FirebaseManager(reference : String) {
 
             override fun onCancelled(error: DatabaseError) {
                 onDataChange(null)
+            }
+        })
+    }
+
+    fun observeListVisibly(path: String, onDataChange: (Boolean) -> Unit) {
+        database.child(path).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val count = snapshot.children.count()
+                if (count > 0){
+                    onDataChange(true)
+                }else{
+                    onDataChange(false)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                onDataChange(false)
             }
         })
     }

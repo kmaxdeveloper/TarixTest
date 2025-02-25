@@ -7,10 +7,10 @@ import uz.kmax.tarixtest.tools.firebase.FirebaseManager
 
 class UpdateFragment(location : String): BaseFragmentWC<FragmentUpdateBinding>(FragmentUpdateBinding::inflate) {
     private var updateLoc = location
-    lateinit var firebaseManager: FirebaseManager
+    private lateinit var firebaseManager: FirebaseManager
     var language = "uz"
     override fun onViewCreated() {
-        firebaseManager = FirebaseManager("TarixTest")
+        firebaseManager = FirebaseManager()
         getMessage(updateLoc)
     }
 

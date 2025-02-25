@@ -1,7 +1,9 @@
 package uz.kmax.tarixtest.fragment.main
 
+import android.graphics.Color
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import uz.kmax.base.fragment.BaseFragmentWC
 import uz.kmax.tarixtest.R
 import uz.kmax.tarixtest.adapter.TestListAdapter
@@ -9,39 +11,40 @@ import uz.kmax.tarixtest.data.main.MenuTestData
 import uz.kmax.tarixtest.databinding.FragmentTestListBinding
 import uz.kmax.tarixtest.dialog.DialogConnection
 import uz.kmax.tarixtest.tools.manager.ConnectionManager
-import uz.kmax.tarixtest.tools.filter.TypeFilter
+import uz.kmax.tarixtest.tools.filter.Filter
 import uz.kmax.tarixtest.tools.firebase.FirebaseManager
+import uz.kmax.tarixtest.tools.manager.AdmobManager
 import uz.kmax.tarixtest.tools.manager.AdsManager
 import uz.kmax.tarixtest.tools.tools.SharedPref
 
 class TestListFragment : BaseFragmentWC<FragmentTestListBinding>(FragmentTestListBinding::inflate) {
-    val adapter by lazy { TestListAdapter() }
-    lateinit var firebaseManager: FirebaseManager
+    private val adapter by lazy { TestListAdapter() }
+    private lateinit var firebaseManager: FirebaseManager
     private var connectionDialog = DialogConnection()
-    private var adsManager = AdsManager()
+    private lateinit var admobManager: AdmobManager
     private lateinit var shared: SharedPref
-    private var dataFilter = TypeFilter()
+    private var dataFilter = Filter()
     private var adsStatus = false
     private var language = "uz"
 
     override fun onViewCreated() {
-        firebaseManager = FirebaseManager("TarixTest")
+        firebaseManager = FirebaseManager()
         shared = SharedPref(requireContext())
+        admobManager = AdmobManager(requireContext())
         language = shared.getLanguage().toString()
-        adsManager.initialize(requireContext())
+        admobManager.initialize(getString(R.string.interstitialAdsUnitId))
 
-        adsManager.loadInterstitialAd(requireContext(), getString(R.string.interstitialAdsUnitId))
-        adsManager.setOnAdLoadStatusListener {
+        admobManager.setOnAdLoadListener {
             adsStatus = it
         }
 
-        getTestData()
+        getTestListData()
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
 
         adapter.setOnTaskListener { testCount, testLocation ->
             if (ConnectionManager().check(requireContext())) {
-                ads(testLocation, testCount)
+                checkLocation(testLocation, testCount)
             } else {
                 connectionDialog.show(requireContext())
                 connectionDialog.setOnCloseListener {
@@ -49,7 +52,7 @@ class TestListFragment : BaseFragmentWC<FragmentTestListBinding>(FragmentTestLis
                 }
                 connectionDialog.setOnTryAgainListener {
                     if (ConnectionManager().check(requireContext())) {
-                        ads(testLocation, testCount)
+                        checkLocation(testLocation, testCount)
                     } else {
                         connectionDialog.show(requireContext())
                     }
@@ -58,40 +61,30 @@ class TestListFragment : BaseFragmentWC<FragmentTestListBinding>(FragmentTestLis
         }
     }
 
-    private fun getTestData() {
+    private fun getTestListData() {
         firebaseManager.observeList("AllTest/$language", MenuTestData::class.java){
             if (it != null) {
-                adapter.setItems(dataFilter.filter(it, 0))
+                adapter.setItems(dataFilter.filterTest(it))
             }
         }
     }
 
     override fun onResume() {
         super.onResume()
-        adsManager.loadInterstitialAd(
-            requireContext(),
-            getString(R.string.interstitialAdsUnitId)
-        )
-        adsManager.setOnAdLoadStatusListener {
+        admobManager.setOnAdLoadListener {
             adsStatus = it
         }
     }
 
     private fun ads(testLocation: String, testCount: Int) {
-        if (adsStatus) {
-            adsManager.showInterstitialAd(requireActivity())
-            adsManager.setOnAdNotReadyListener {
+        if (adsStatus || admobManager.isAdReady()) {
+            admobManager.showInterstitialAd(requireActivity()){
                 replaceFragment(TestFragment(testLocation, testCount))
             }
-            adsManager.setOnAdDismissListener {
-                replaceFragment(
-                    TestFragment(
-                        testLocation,
-                        testCount
-                    )
-                )
+            admobManager.setOnAdDismissListener {
+                replaceFragment(TestFragment(testLocation, testCount))
             }
-            adsManager.setOnAdClickListener {
+            admobManager.setOnAdClickListener {
                 Toast.makeText(requireContext(), "Thanks ! for clicking ads :D", Toast.LENGTH_SHORT).show()
             }
         } else {
@@ -101,12 +94,21 @@ class TestListFragment : BaseFragmentWC<FragmentTestListBinding>(FragmentTestLis
 
     override fun onStart() {
         super.onStart()
-        adsManager.loadInterstitialAd(
-            requireContext(),
-            getString(R.string.interstitialAdsUnitId)
-        )
-        adsManager.setOnAdLoadStatusListener {
+        admobManager.setOnAdLoadListener {
             adsStatus = it
+        }
+    }
+
+    private fun checkLocation(testLocation: String, testCount: Int){
+        firebaseManager.observeListVisibly("Test/$language/$testLocation"){ status->
+            if (status){
+                ads(testLocation,testCount)
+            }else{
+                Snackbar.make(binding.recyclerView, "Texnik ishlar olib borilmoqda !", Snackbar.LENGTH_SHORT)
+                    .setBackgroundTint(Color.WHITE)
+                    .setTextColor(Color.BLACK)
+                    .show()
+            }
         }
     }
 }

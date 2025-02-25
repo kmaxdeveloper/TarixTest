@@ -8,7 +8,7 @@ import uz.kmax.tarixtest.databinding.FragmentSettingsBinding
 import uz.kmax.tarixtest.tools.tools.SharedPref
 
 class SettingsFragment : BaseFragmentWC<FragmentSettingsBinding>(FragmentSettingsBinding::inflate) {
-    lateinit var sharedPref: SharedPref
+    private lateinit var sharedPref: SharedPref
 
     override fun onViewCreated() {
         sharedPref = SharedPref(requireContext())

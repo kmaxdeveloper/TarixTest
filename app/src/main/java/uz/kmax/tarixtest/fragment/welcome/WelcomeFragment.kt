@@ -48,9 +48,6 @@ class WelcomeFragment: BaseFragmentWC<FragmentWelcomeBinding>(FragmentWelcomeBin
                     }
                     4->{
                         setText(getString(R.string.welcome_5))
-                    }
-                    5->{
-                        setText(getString(R.string.welcome_6))
                         binding.indicator.visibility = View.INVISIBLE
                         binding.nextButton.visibility = View.INVISIBLE
                         binding.start.visibility = View.VISIBLE

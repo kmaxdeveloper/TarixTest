@@ -15,41 +15,47 @@ import uz.kmax.tarixtest.databinding.FragmentTestBinding
 import uz.kmax.tarixtest.dialog.DialogBack
 import uz.kmax.tarixtest.dialog.DialogEndTest
 import uz.kmax.tarixtest.tools.firebase.FirebaseManager
+import uz.kmax.tarixtest.tools.manager.AdmobManager
 import uz.kmax.tarixtest.tools.manager.AdsManager
 import uz.kmax.tarixtest.tools.manager.TestManager
 import uz.kmax.tarixtest.tools.tools.SharedPref
 import kotlin.random.Random
 
-class TestFragment(private var testLocation: String, private var testCount : Int) :
-    BaseFragmentWC<FragmentTestBinding>(FragmentTestBinding::inflate) {
+class TestFragment(private var testLocation: String, private var testCount : Int) : BaseFragmentWC<FragmentTestBinding>(FragmentTestBinding::inflate) {
     private var testManager: TestManager = TestManager()
     private val testLinearLayouts by lazy { ArrayList<LinearLayoutCompat>() }
     private val variantList by lazy { ArrayList<AppCompatTextView>() }
     private lateinit var testStatus: ArrayList<AppCompatTextView>
-    lateinit var firebaseManager: FirebaseManager
+    private lateinit var firebaseManager: FirebaseManager
     private var variantSelected = false
+    private var adsStatus = false
     private var testStatusCount = 0
     private var countTest = 0
     private var dialogEnd = DialogEndTest()
     private var dialogBack = DialogBack()
-    private var adsManager = AdsManager()
-    lateinit var sharedPref: SharedPref
+    private lateinit var admobManager: AdmobManager
+    private lateinit var sharedPref: SharedPref
     private var language = "uz"
 
     override fun onViewCreated() {
         sharedPref = SharedPref(requireContext())
-        firebaseManager = FirebaseManager("TarixTest")
+        firebaseManager = FirebaseManager()
+        admobManager = AdmobManager(requireContext())
         language = sharedPref.getLanguage().toString()
-        adsManager.initialize(requireContext())
-        adsManager.loadInterstitialAd(requireContext(),getString(R.string.interstitialAdsUnitId))
-        adsManager.loadBannerAd(binding.bannerAds)
+        admobManager.initialize(getString(R.string.interstitialAdsUnitId))
+        admobManager.loadBannerAd(binding.bannerAds)
+        admobManager.setOnAdLoadListener {
+            adsStatus = it
+        }
         startTest(testLocation,testCount)
     }
 
     override fun onResume() {
         super.onResume()
-        adsManager.loadInterstitialAd(requireContext(),getString(R.string.interstitialAdsUnitId))
-        adsManager.loadBannerAd(binding.bannerAds)
+        admobManager.loadBannerAd(binding.bannerAds)
+        admobManager.setOnAdLoadListener {
+            adsStatus = it
+        }
     }
 
     private fun startTest(testLocation: String,testCount: Int) {
@@ -63,6 +69,8 @@ class TestFragment(private var testLocation: String, private var testCount : Int
                 testManager.setTestList(listTest)
                 loadView()
                 loadDataToView()
+            }else{
+                Toast.makeText(requireContext(), "Empty Test !", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -93,14 +101,17 @@ class TestFragment(private var testLocation: String, private var testCount : Int
         variantList.add(binding.variantB)
         variantList.add(binding.variantC)
         variantList.add(binding.variantD)
-        variantList.shuffle()
 
         binding.testCountLayout[positionAnswer()].setBackgroundResource(R.drawable.style_position_answer)
 
         binding.back.setOnClickListener {
             dialogBack.show(requireContext())
             dialogBack.setOnBackYesListener {
-                ads()
+                if (adsStatus || admobManager.isAdReady()) {
+                    ads()
+                }else{
+                    startMainFragment(MenuFragment())
+                }
             }
         }
         binding.nextBtn.setOnClickListener {
@@ -109,7 +120,11 @@ class TestFragment(private var testLocation: String, private var testCount : Int
         binding.stopTest.setOnClickListener {
             dialogBack.show(requireContext())
             dialogBack.setOnBackYesListener {
-                ads()
+                if (adsStatus || admobManager.isAdReady()) {
+                    ads()
+                }else{
+                    startMainFragment(MenuFragment())
+                }
             }
         }
     }
@@ -122,7 +137,7 @@ class TestFragment(private var testLocation: String, private var testCount : Int
                 variantSelected = false
 
                 if (positionAnswer() == countTest){
-                    binding.nextBtn.text = "Finish"
+                    binding.nextBtn.text = getText(R.string.finish)
                     binding.nextBtn.textSize = 7f
                 }
             } else {
@@ -132,7 +147,11 @@ class TestFragment(private var testLocation: String, private var testCount : Int
                     testManager.wrongAnswerCount
                 )
                 dialogEnd.setOnOkBtnListener {
-                    ads()
+                    if (adsStatus || admobManager.isAdReady()) {
+                        ads()
+                    }else{
+                        startMainFragment(MenuFragment())
+                    }
                 }
                 dialogEnd.setOnReStartListener {
                     testManager.currentQuestionPosition = 0
@@ -165,7 +184,7 @@ class TestFragment(private var testLocation: String, private var testCount : Int
         variantList[3].text = testManager.getVariantD()
 
         if (positionAnswer() == countTest-1){
-            binding.nextBtn.text = "Finish"
+            binding.nextBtn.text = getText(R.string.finish)
             binding.nextBtn.textSize = 15f
         }
 
@@ -219,15 +238,14 @@ class TestFragment(private var testLocation: String, private var testCount : Int
         return random
     }
     private fun ads(){
-        adsManager.showInterstitialAd(requireActivity())
-        adsManager.setOnAdNotReadyListener {
+        admobManager.showInterstitialAd(requireActivity()){
             startMainFragment(MenuFragment())
         }
 
-        adsManager.setOnAdDismissListener {
+        admobManager.setOnAdDismissListener {
             startMainFragment(MenuFragment())
         }
-        adsManager.setOnAdClickListener {
+        admobManager.setOnAdClickListener {
             Toast.makeText(requireContext(), "Thanks ! for clicking ads :D", Toast.LENGTH_SHORT).show()
         }
     }

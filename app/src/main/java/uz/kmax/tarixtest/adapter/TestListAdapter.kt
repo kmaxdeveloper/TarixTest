@@ -11,11 +11,10 @@ import uz.kmax.tarixtest.databinding.ItemTestMenuBinding
 import uz.kmax.tarixtest.tools.firebase.FirebaseManager
 
 class TestListAdapter() : BaseRecycleViewDU<ItemTestMenuBinding, MenuTestData>(ItemTestMenuBinding::inflate) {
-
-    lateinit var firebaseManager : FirebaseManager
+    private lateinit var firebaseManager : FirebaseManager
 
     override fun bind(binding: ItemTestMenuBinding, item: MenuTestData) {
-        firebaseManager = FirebaseManager("TarixTest")
+        firebaseManager = FirebaseManager()
         binding.testName.text = item.testName
         binding.testCount.text = "Random"
         if (item.testNewOld == 1) {

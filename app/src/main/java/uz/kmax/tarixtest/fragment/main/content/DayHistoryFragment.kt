@@ -20,11 +20,11 @@ class DayHistoryFragment : BaseFragmentWC<FragmentDayHistoryBinding>(FragmentDay
     private var month: String = ""
     private var day: String = ""
     private var language = "uz"
-    lateinit var sharedPref: SharedPref
-    lateinit var firebaseManager: FirebaseManager
+    private lateinit var sharedPref: SharedPref
+    private lateinit var firebaseManager: FirebaseManager
 
     override fun onViewCreated() {
-        firebaseManager = FirebaseManager("TarixTest/Content")
+        firebaseManager = FirebaseManager()
         month = SimpleDateFormat("MM").format(Date())
         day = SimpleDateFormat("dd").format(Date())
         sharedPref = SharedPref(requireContext())
@@ -52,7 +52,7 @@ class DayHistoryFragment : BaseFragmentWC<FragmentDayHistoryBinding>(FragmentDay
     }
 
     private fun getData(){
-        firebaseManager.observeList("$language/KunTarixi/$month/$day/kunTarixi", DayHistoryData::class.java){
+        firebaseManager.observeList("Content/$language/KunTarixi/$month/$day/kunTarixi", DayHistoryData::class.java){
             if (it != null) {
                 dayHistorySize = it.size
                 adapter.setItems(it)

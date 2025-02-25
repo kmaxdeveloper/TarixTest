@@ -14,7 +14,6 @@ class WelcomeAdapter(val ctx: Context) : RecyclerView.Adapter<WelcomeAdapter.Vie
         R.raw.world_map1,
         R.raw.search_in_book2,
         R.raw.test_collection3,
-        R.raw.research_time4,
         R.raw.checking_iq5
     )
 

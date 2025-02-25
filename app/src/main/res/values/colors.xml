@@ -18,4 +18,5 @@
     <color name="color_summer">#FFE600</color>
     <color name="color_item_menu_default">#4CAF50</color>
     <color name="color_splash">#D7E8B475</color>
+    <color name="color_app">#B8BCC5</color>
 </resources>

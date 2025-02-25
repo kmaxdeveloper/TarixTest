@@ -17,12 +17,16 @@
     <string name="welcome_2">History tests</string>
     <string name="welcome_3">Day History</string>
     <string name="welcome_4">History test collection</string>
-    <string name="welcome_5">Save your time!</string>
-    <string name="welcome_6">Test your knowledge !</string>
+    <string name="welcome_5">Test your knowledge !</string>
     <string name="message">Message</string>
     <string name="update">Update</string>
     <string name="update_available">New update is available. \n Update the software!</string>
     <string name="menuHome">Home</string>
     <string name="menuContent">Content</string>
     <string name="menuSettings">Settings</string>
+    <string name="bookSize">Book Size : </string>
+    <string name="bookRelease">Book Release : </string>
+    <string name="bookTitle">Book Title : </string>
+    <string name="contentWarningInfo">Bu Kontent Sizning Dastur Versiyangizda ishlamaydi . Dasturnni yangilang !</string>
+    <string name="books">Edu Books</string>
 </resources>
