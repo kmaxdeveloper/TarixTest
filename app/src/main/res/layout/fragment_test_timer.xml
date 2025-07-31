@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/questionList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="16dp">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/image_question_32px"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="center_vertical"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="Savol"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/testCountLayout"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TestCountStyle"/>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="2dp"
+        android:gravity="center">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="160dp"
+            android:layout_height="65dp"
+            android:orientation="horizontal"
+            android:layout_marginEnd="5dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/style_item_menu">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:padding="4dp"
+                android:layout_marginStart="8dp"
+                app:srcCompat="@drawable/image_timer"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/testTimer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/madimi"
+                android:text="00:00"/>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/timerInfinity"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="4dp"
+                app:srcCompat="@drawable/image_infinity_32"
+                android:visibility="gone"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="160dp"
+            android:layout_height="65dp"
+            android:layout_marginStart="5dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:padding="4dp"
+            android:background="@drawable/style_item_menu">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageHearth1"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="3dp"
+                app:srcCompat="@drawable/image_heart"/>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageHearth2"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="3dp"
+                app:srcCompat="@drawable/image_infinity_64px"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/answerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        android:layout_weight="4"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="16dp"
+        android:layout_marginBottom="10dp">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                style="@style/VariantStyle"
+                android:padding="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/text_A"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/pre_hear_regular"
+                    android:layout_marginStart="5dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/variantA"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="variant A"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                style="@style/VariantStyle"
+                android:padding="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/text_B"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/pre_hear_regular"
+                    android:layout_marginStart="5dp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/variantB"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="variant A"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                style="@style/VariantStyle"
+                android:padding="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/text_C"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/pre_hear_regular"
+                    android:layout_marginStart="5dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/variantC"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="variant A"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                style="@style/VariantStyle"
+                android:padding="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="@string/text_D"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/pre_hear_regular"
+                    android:layout_marginStart="5dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/variantD"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="variant D"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/bannerAds"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        ads:adUnitId="@string/bannerAdsUnitId">
+    </com.google.android.gms.ads.AdView>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginBottom="15dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/back"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:drawableStart="@drawable/image_back_32px"
+            android:background="@drawable/style_btn"
+            android:text="@string/back"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/stopTest"
+            android:layout_width="0dp"
+            android:layout_height="75dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:padding="8dp"
+            android:drawableEnd="@drawable/image_finish_32px"
+            android:background="@drawable/style_btn"
+            android:text="@string/finish"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/nextBtn"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/style_btn"
+            android:text="@string/next"
+            android:drawableEnd="@drawable/image_next_32px"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

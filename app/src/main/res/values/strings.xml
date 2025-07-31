@@ -2,8 +2,14 @@
     <string name="app_name">Tarix Test</string>
     <string name="company_name">Kmax Programmers</string>
     <string name="company_name_with_symbol">Kmax Programmers ®</string>
+
+    <!-- Ads-->
     <string name="interstitialAdsUnitId">ca-app-pub-4664801446868642/7837932967</string>
     <string name="bannerAdsUnitId">ca-app-pub-4664801446868642/2560010967</string>
+    <string name="bannerAdsUnitIdYandex">ee</string>
+    <string name="interstitialAdsUnitIdYandex">R-M-15560731-1</string>
+    <!-- Ads-->
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="PrivacyPolicy">Privacy Policy</string>
@@ -29,4 +35,21 @@
     <string name="bookTitle">Book Title : </string>
     <string name="contentWarningInfo">Bu Kontent Sizning Dastur Versiyangizda ishlamaydi . Dasturnni yangilang !</string>
     <string name="books">Maktab Darsliklari</string>
+
+    <string name="person_name">Person Name</string>
+    <string name="personBirth"> Tug\'ilgan yil : </string>
+    <string name="personDeath"> Vafot etgan yil : </string>
+    <string name="personRegion"> Mamlakati : </string>
+    <string name="personType"> Faoliyati : </string>
+    <string name="personAbout"> Tarjimai hol : </string>
+    <string name="personWorks"> Yozgan Asarlari : </string>
+    <string name="personAwards"> Olgan Mukofotlari : </string>
+
+    <string name="default_text">en</string>
+    <string name="change_test_mode_hint">Test rejimini keyinchalik Settings bo\'limi orqali o\'zgartishngiz mumkin.</string>
+    <string name="testSelectMode">Test Rejimini tanlang :</string>
+    <string name="restoreHeart">Urinishlarni tiklash uchun Reklamani tomosha qilishingiz mumkin</string>
+    <string name="watchAd">Reklama ko\'rish</string>
+    <string name="attempsIsOver">Urinishlar tugadi!</string>
+    <string name="exit">Chiqish</string>
 </resources>

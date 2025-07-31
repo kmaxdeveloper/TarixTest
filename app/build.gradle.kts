@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -12,8 +14,8 @@ android {
         applicationId = "uz.kmax.tarixtest"
         minSdk = 24
         targetSdk = 35
-        versionCode = 16
-        versionName = "2.4.0"
+        versionCode = 20
+        versionName = "3.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -62,4 +64,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("io.github.afreakyelf:Pdf-Viewer:2.1.1")
+    // dagger
+    implementation("com.google.dagger:hilt-android:2.50")
+    kapt("com.google.dagger:hilt-compiler:2.50")
+    implementation("com.yandex.android:mobileads:7.12.3") // X.x.x o'rniga eng yangi versiyani qo'ying
 }
