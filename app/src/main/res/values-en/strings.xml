@@ -51,4 +51,5 @@
     <string name="watchAd">Watch ADS</string>
     <string name="attempsIsOver">No attempts remaining!</string>
     <string name="exit">Exit</string>
+    <string name="snowAnimation">Snow Animation : </string>
 </resources>

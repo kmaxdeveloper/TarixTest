@@ -12,6 +12,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import uz.kmax.base.fragment.BaseFragmentWC
 import uz.kmax.tarixtest.R
+import uz.kmax.tarixtest.data.ads.AdmobNativeAdsManager
 import uz.kmax.tarixtest.data.tools.firebase.FirebaseManager
 import uz.kmax.tarixtest.data.ads.AdsManager
 import uz.kmax.tarixtest.data.tools.manager.TestManager
@@ -49,16 +50,26 @@ class TimerTestFragment(private var testLocation: String, private var testCount:
 
     @Inject
     lateinit var sharedPref: SharedPref
+    private var nativeAds = AdmobNativeAdsManager()
 
     override fun onViewCreated() {
         firebaseManager = FirebaseManager()
         language = sharedPref.getLanguage().toString()
         /** Reklama yuklash init qilish*/
         adsManager.init()
-        adsManager.loadBanners(binding.bannerAds)
+        nativeAds.init(binding.nativeAdCard,binding.nativeAdView)
+        nativeAds.loadNativeAd(requireContext())
         adsManager.initRewardedAds()
         /** Kod oxiri*/
         startTest(testLocation, testCount)
+
+        if (sharedPref.getAnimationStatus()){
+            binding.snowAnimation.visibility = View.VISIBLE
+            binding.snowAnimation.startSnow()
+        }else{
+            binding.snowAnimation.visibility = View.GONE
+            binding.snowAnimation.stopSnow()
+        }
 
         onFragmentBackPressed {
             timer?.cancel()

@@ -29,6 +29,11 @@
         android:layout_marginTop="?attr/actionBarSize"
         android:layout_marginBottom="80dp"/>
 
+    <uz.kmax.tarixtest.presentation.customview.SnowView3
+        android:id="@+id/snowAnimation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="56dp">

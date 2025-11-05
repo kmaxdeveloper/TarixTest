@@ -2,16 +2,30 @@ package uz.kmax.tarixtest.presentation.ui.fragment.main.test
 
 import android.graphics.Color
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.View
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.cardview.widget.CardView
 import androidx.core.view.get
 import androidx.core.view.size
+import androidx.lifecycle.VIEW_MODEL_STORE_OWNER_KEY
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.nativead.NativeAdOptions
+import com.google.android.gms.ads.nativead.NativeAdView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import uz.kmax.base.fragment.BaseFragmentWC
 import uz.kmax.tarixtest.R
+import uz.kmax.tarixtest.data.ads.AdmobNativeAdsManager
 import uz.kmax.tarixtest.data.tools.firebase.FirebaseManager
 import uz.kmax.tarixtest.data.ads.AdsManager
 import uz.kmax.tarixtest.data.tools.manager.TestManager
@@ -53,15 +67,27 @@ class HeartTestFragment(private var testLocation: String, private var testCount:
     @Inject
     lateinit var sharedPref: SharedPref
 
+    private var nativeAds = AdmobNativeAdsManager()
+
     override fun onViewCreated() {
         firebaseManager = FirebaseManager()
         language = sharedPref.getLanguage().toString()
         /** Reklama yuklash init qilish*/
         adsManager.init()
-        adsManager.loadBanners(binding.bannerAds)
         adsManager.initRewardedAds()
+        // Native Ads
+        nativeAds.init(binding.nativeAdCard,binding.nativeAdView)
+        nativeAds.loadNativeAd(requireContext())
         /** Kod oxiri*/
         startTest(testLocation, testCount)
+
+        if (sharedPref.getAnimationStatus()){
+            binding.snowAnimation.startSnow()
+            binding.snowAnimation.visibility = View.VISIBLE
+        }else{
+            binding.snowAnimation.stopSnow()
+            binding.snowAnimation.visibility = View.GONE
+        }
 
         onFragmentBackPressed {
             timer?.cancel()

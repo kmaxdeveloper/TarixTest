@@ -1,10 +1,13 @@
 package uz.kmax.tarixtest.presentation.ui.fragment.main
 
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.google.android.material.navigation.NavigationView
 import com.google.android.play.core.review.ReviewException
 import com.google.android.play.core.review.ReviewManagerFactory
@@ -15,17 +18,16 @@ import uz.kmax.base.fragmentcontroller.InnerFragmentController
 import uz.kmax.tarixtest.R
 import uz.kmax.tarixtest.data.tools.tools.SharedPref
 import uz.kmax.tarixtest.databinding.FragmentMenuBinding
-import uz.kmax.tarixtest.presentation.ui.dialog.DialogTestTypeSelection
 import uz.kmax.tarixtest.presentation.ui.fragment.other.AdminFragment
 import uz.kmax.tarixtest.presentation.ui.fragment.other.PrivacyFragment
 import uz.kmax.tarixtest.presentation.ui.fragment.tool.SettingsFragment
-import uz.kmax.tarixtest.presentation.ui.fragment.main.TestListFragment
-import uz.kmax.tarixtest.presentation.ui.fragment.main.ContentFragment
+import uz.kmax.tarixtest.presentation.viewModel.SettingsViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MenuFragment : BaseFragmentWC<FragmentMenuBinding>(FragmentMenuBinding::inflate) {
     private lateinit var toggleBar: ActionBarDrawerToggle
+    private val controlViewModel: SettingsViewModel by activityViewModels()
 
     @Inject
     lateinit var shared: SharedPref
@@ -47,26 +49,54 @@ class MenuFragment : BaseFragmentWC<FragmentMenuBinding>(FragmentMenuBinding::in
         binding.drawerLayout.addDrawerListener(toggleBar)
         toggleBar.syncState()
 
-        binding.bottomNavigation.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.appTheme))
+        binding.bottomNavigation.setBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.appTheme
+            )
+        )
         binding.bottomNavigation.itemIconTintList = null
 
+        // Snow Animation ni boshqarish kodi
+        if (shared.getAnimationStatus()){
+            binding.snowAnimation.visibility = View.VISIBLE
+            binding.snowAnimation.setSnowflakeImages(R.drawable.image_snowflake2,R.drawable.image_snowflake,R.drawable.image_snowflake3)
+            binding.snowAnimation.startSnow()
+        }else{
+            binding.snowAnimation.visibility = View.GONE
+            binding.snowAnimation.stopSnow()
+        }
+
+        controlViewModel.isSnowing.observe(viewLifecycleOwner) { state ->
+            if (state == true) {
+                binding.snowAnimation.visibility = View.VISIBLE
+                binding.snowAnimation.startSnow()
+            } else {
+                binding.snowAnimation.visibility = View.GONE
+                binding.snowAnimation.stopSnow()
+            }
+        }
+
         binding.bottomNavigation.setOnItemSelectedListener { item ->
-            when(item.itemId) {
+            when (item.itemId) {
                 R.id.action_home -> {
                     // Respond to navigation item 1 click
                     replaceInnerFragment(TestListFragment())
                     true
                 }
+
                 R.id.action_content -> {
                     // Respond to navigation item 2 click
                     replaceInnerFragment(ContentFragment())
                     true
                 }
-                R.id.action_settings ->{
+
+                R.id.action_settings -> {
                     // Sozlamalar fragmentiga o'tish
                     replaceInnerFragment(SettingsFragment())
                     true
                 }
+
                 else -> false
             }
         }
@@ -129,11 +159,11 @@ class MenuFragment : BaseFragmentWC<FragmentMenuBinding>(FragmentMenuBinding::in
         }
     }
 
-    private fun toast(message : String){
+    private fun toast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun replaceInnerFragment(fragment : Fragment){
+    private fun replaceInnerFragment(fragment: Fragment) {
         InnerFragmentController.innerController?.startInnerMainFragment(fragment)
     }
 }

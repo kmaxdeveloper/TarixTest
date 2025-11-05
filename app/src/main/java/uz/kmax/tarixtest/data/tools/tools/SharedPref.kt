@@ -94,4 +94,12 @@ class SharedPref(var context: Context) {
     }
 
     fun getChooseTestType() = preferences.getBoolean("CHOOSE_TEST_TYPE",true)
+
+    fun setSnowAnimationStatus(animStatus : Boolean){
+        editor = preferences.edit()
+        editor.putBoolean("ANIMATION_STATUS",animStatus)
+        editor.apply()
+    }
+
+    fun getAnimationStatus() = preferences.getBoolean("ANIMATION_STATUS",false)
 }
